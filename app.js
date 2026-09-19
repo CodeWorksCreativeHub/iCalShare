@@ -97,7 +97,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	// Submit Form -> Reads uploaded .ics file then opens pre-filled GitHub Issue
+	// Submit Form -> Reads uploaded .ics file and pre-fills GitHub YAML issue template fields
 	if (submissionForm) {
 		submissionForm.addEventListener("submit", function (e) {
 			e.preventDefault();
@@ -122,6 +122,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			reader.onload = function (event) {
 				var icsContent = event.target.result;
 
+				// Target GitHub YAML issue template IDs: calendar_title, category, description, ics_content
 				var issueUrl = "https://github.com/" + GITHUB_REPO_OWNER + "/" + GITHUB_REPO_NAME + "/issues/new?template=calendar-submission.yml" + "&title=" + encodeURIComponent("New Calendar: " + titleVal) + "&calendar_title=" + encodeURIComponent(titleVal) + "&category=" + encodeURIComponent(categoryVal) + "&description=" + encodeURIComponent(descVal) + "&ics_content=" + encodeURIComponent(icsContent);
 
 				window.open(issueUrl, "_blank");
