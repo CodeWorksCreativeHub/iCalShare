@@ -190,7 +190,12 @@ function openPreview(item) {
 
 function parseICS(icsText) {
 	var events = [];
-	var lines = icsText.split(/\r\n|\n|\r/);
+	if (!icsText) return events;
+
+	// 1. Unfold lines (lines split with a trailing newline + leading space/tab)
+	var unfolded = icsText.replace(/\r\n[ \t]|\r[ \t]|\n[ \t]/g, "");
+	var lines = unfolded.split(/\r\n|\n|\r/);
+
 	var currentEvent = null;
 
 	for (var i = 0; i < lines.length; i++) {
@@ -199,17 +204,29 @@ function parseICS(icsText) {
 		if (line === "BEGIN:VEVENT") {
 			currentEvent = {};
 		} else if (line === "END:VEVENT" && currentEvent) {
-			events.push(currentEvent);
+			if (currentEvent.summary || currentEvent.dtstart) {
+				events.push(currentEvent);
+			}
 			currentEvent = null;
 		} else if (currentEvent) {
-			if (line.indexOf("SUMMARY:") === 0) {
-				currentEvent.summary = line.substring(8);
-			} else if (line.indexOf("DTSTART:") === 0 || line.indexOf("DTSTART;") === 0) {
-				var parts = line.split(":");
-				currentEvent.dtstart = parts[1] || "";
+			// Split on the FIRST colon to separate property header from value
+			var colonIndex = line.indexOf(":");
+			if (colonIndex !== -1) {
+				var header = line.substring(0, colonIndex).toUpperCase();
+				var value = line.substring(colonIndex + 1).trim();
+
+				// Match SUMMARY or SUMMARY;PROPERTY
+				if (header === "SUMMARY" || header.indexOf("SUMMARY;") === 0) {
+					currentEvent.summary = value;
+				}
+				// Match DTSTART or DTSTART;PROPERTY
+				else if (header === "DTSTART" || header.indexOf("DTSTART;") === 0) {
+					currentEvent.dtstart = value;
+				}
 			}
 		}
 	}
+
 	return events;
 }
 
