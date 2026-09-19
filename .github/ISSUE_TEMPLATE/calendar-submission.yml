@@ -1,0 +1,52 @@
+name: "Calendar Submission"
+description: "Submit a new .ics calendar to the iCalShare directory"
+title: "[Calendar Submission]: "
+labels: ["calendar-submission"]
+body:
+    - type: input
+      id: title
+      attributes:
+          label: "Calendar Title"
+          description: "Name of the calendar"
+          placeholder: "e.g. Premier League 2026 Season"
+      validations:
+          required: true
+
+    - type: dropdown
+      id: category
+      attributes:
+          label: "Category"
+          options:
+              - Holidays
+              - Sports
+              - Tech
+              - TV & Movies
+      validations:
+          required: true
+
+    - type: textarea
+      id: description
+      attributes:
+          label: "Description"
+          placeholder: "Provide a brief summary of what this calendar includes..."
+      validations:
+          required: true
+
+    - type: textarea
+      id: ics_content
+      attributes:
+          label: "ICS File Content"
+          description: "Paste raw VCALENDAR code content here."
+          placeholder: |
+              BEGIN:VCALENDAR
+              VERSION:2.0
+              PRODID:-//iCalShare Demo//EN
+              BEGIN:VEVENT
+              SUMMARY:Sample Event
+              DTSTART:20261001T120000Z
+              DTEND:20261001T130000Z
+              END:VEVENT
+              END:VCALENDAR
+          render: text
+      validations:
+          required: true

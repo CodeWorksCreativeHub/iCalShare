@@ -1,0 +1,110 @@
+name: Process Calendar Submission
+
+on:
+    issues:
+        types: [labeled, opened]
+
+jobs:
+    process-calendar:
+        if: contains(github.event.issue.labels.*.name, 'calendar-submission')
+        runs-on: ubuntu-latest
+        permissions:
+            contents: write
+            issues: write
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+
+            - name: Process Issue Data
+              uses: actions/github-script@v7
+              with:
+                  script: |
+                      const fs = require('fs');
+                      const path = require('path');
+
+                      const issueBody = context.payload.issue.body;
+
+                      // Helper to parse markdown section from issue template
+                      function getSection(label) {
+                        const regex = new RegExp(`### ${label}\\s*\\n\\n([\\s\\S]*?)(?=\\n\\n### |$)`);
+                        const match = issueBody.match(regex);
+                        return match ? match[1].trim() : '';
+                      }
+
+                      const title = getSection('Calendar Title') || context.payload.issue.title.replace('[Calendar Submission]:', '').trim();
+                      const category = getSection('Category') || 'Tech';
+                      const description = getSection('Description') || 'No description provided.';
+                      const rawIcs = getSection('ICS File Content').replace(/^```(text|ics)?/g, '').replace(/```$/g, '').trim();
+
+                      if (!rawIcs || !rawIcs.includes('BEGIN:VCALENDAR')) {
+                        core.setFailed('Invalid ICS content provided in issue body.');
+                        return;
+                      }
+
+                      // Generate clean ID & paths
+                      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+                      const categoryDir = category.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                      const targetFolder = path.join(process.cwd(), 'calendars', categoryDir);
+                      const targetIcsPath = path.join(targetFolder, `${slug}.ics`);
+                      const relativeFilePath = `calendars/${categoryDir}/${slug}.ics`;
+
+                      // Ensure destination directory exists
+                      fs.mkdirSync(targetFolder, { recursive: true });
+
+                      // Save .ics file content
+                      fs.writeFileSync(targetIcsPath, rawIcs, 'utf8');
+
+                      // Update calendars.json
+                      const jsonPath = path.join(process.cwd(), 'calendars.json');
+                      let db = [];
+                      if (fs.existsSync(jsonPath)) {
+                        db = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+                      }
+
+                      // Replace existing or append new entry
+                      const existingIndex = db.findIndex(item => item.id === slug);
+                      const entry = {
+                        id: slug,
+                        title: title,
+                        category: category,
+                        description: description,
+                        file: relativeFilePath
+                      };
+
+                      if (existingIndex >= 0) {
+                        db[existingIndex] = entry;
+                      } else {
+                        db.push(entry);
+                      }
+
+                      fs.writeFileSync(jsonPath, JSON.stringify(db, null, 2), 'utf8');
+
+                      // Post success comment to GitHub Issue
+                      await github.rest.issues.createComment({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.payload.issue.number,
+                        body: `🎉 **Calendar Published Successfully!**\n\n- **Title:** ${title}\n- **Category:** ${category}\n- **Saved To:** \`${relativeFilePath}\`\n\nYour submission is now live in the directory!`
+                      });
+
+                      // Close Issue automatically
+                      await github.rest.issues.update({
+                        owner: context.repo.owner,
+                        repo: context.repo.repo,
+                        issue_number: context.payload.issue.number,
+                        state: 'closed'
+                      });
+
+            - name: Commit & Push Changes
+              run: |
+                  git config --global user.name "github-actions[bot]"
+                  git config --global user.email "github-actions[bot]@users.noreply.github.com"
+                  git add calendars/ calendars.json
+                  git commit -m "feat: auto-add calendar from Issue #${{ github.event.issue.number }}" || echo "No changes to commit"
+                  git push

@@ -1,0 +1,16 @@
+[
+    {
+        "id": "tech-conferences-2026",
+        "title": "Global Tech Conferences 2026",
+        "category": "Tech",
+        "description": "Key tech event dates for developers, AI researchers, and engineers.",
+        "file": "calendars/tech/tech-conferences-2026.ics"
+    },
+    {
+        "id": "us-holidays-2026",
+        "title": "US Federal Holidays 2026",
+        "category": "Holidays",
+        "description": "Standard federal public holidays observed across the United States.",
+        "file": "calendars/holidays/us-holidays-2026.ics"
+    }
+]
