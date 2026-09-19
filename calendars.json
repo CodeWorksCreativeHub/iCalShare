@@ -5,5 +5,12 @@
     "category": "Holidays",
     "description": "Standard federal public holidays observed across the United States.",
     "file": "calendars/holidays/us-holidays-2026.ics"
+  },
+  {
+    "id": "uk-holidays",
+    "title": "UK Holidays",
+    "category": "Holidays",
+    "description": "UK bank holidays and public holidays for easy planning throughout the year.",
+    "file": "calendars/holidays/uk-holidays.ics"
   }
 ]
