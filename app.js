@@ -97,7 +97,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	// Submit Form -> Reads uploaded .ics file and pre-fills GitHub YAML issue template fields
+	// Submit Form -> Builds a Markdown body and opens the GitHub issue template
 	if (submissionForm) {
 		submissionForm.addEventListener("submit", function (e) {
 			e.preventDefault();
@@ -122,14 +122,12 @@ window.addEventListener("DOMContentLoaded", function () {
 			reader.onload = function (event) {
 				var icsContent = event.target.result;
 
-				// Notice the "form[...]" prefix for field IDs!
+				var issueBody = "### Calendar Title\n" + titleVal + "\n\n" + "### Category\n" + categoryVal + "\n\n" + "### Description\n" + descVal + "\n\n" + "### ICS Content\n```ics\n" + icsContent + "\n```";
+
 				var params = new URLSearchParams({
-					template: "calendar-submission.yml",
+					template: "calendar-submission.md",
 					title: "New Calendar: " + titleVal,
-					"form[calendar_title]": titleVal,
-					"form[category]": categoryVal,
-					"form[description]": descVal,
-					"form[ics_content]": icsContent,
+					body: issueBody,
 				});
 
 				var queryString = params.toString().replace(/\+/g, "%20");
