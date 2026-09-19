@@ -1,6 +1,6 @@
 // Change this to your GitHub username and repository name!
-var GITHUB_REPO_OWNER = "YOUR_GITHUB_USERNAME";
-var GITHUB_REPO_NAME = "my-icalshare";
+var GITHUB_REPO_OWNER = "CodeWorksCreativeHub";
+var GITHUB_REPO_NAME = "iCalShare";
 
 // Default fallback data for local file:// testing
 var DEFAULT_CALENDARS = [
