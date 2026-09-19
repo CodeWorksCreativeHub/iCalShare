@@ -318,11 +318,10 @@ function openPreview(item) {
 	}
 
 	var absoluteUrl = window.location.origin + window.location.pathname.replace("index.html", "") + item.file;
-	var webcalUrl = absoluteUrl.replace(/^https?:\/\//, "webcal://");
 
 	if (copyWebcalBtn) {
 		copyWebcalBtn.onclick = function () {
-			navigator.clipboard.writeText(webcalUrl).then(function () {
+			navigator.clipboard.writeText(absoluteUrl).then(function () {
 				alert("Subscription URL copied to clipboard:\n" + webcalUrl);
 			});
 		};
