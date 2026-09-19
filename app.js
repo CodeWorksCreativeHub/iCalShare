@@ -10,6 +10,7 @@ var DEFAULT_CALENDARS = [
 		category: "Tech",
 		description: "Key tech event dates for developers, AI researchers, and engineers.",
 		file: "calendars/tech/tech-conferences-2026.ics",
+		subscribers: "6,400",
 	},
 	{
 		id: "us-holidays-2026",
@@ -17,6 +18,7 @@ var DEFAULT_CALENDARS = [
 		category: "Holidays",
 		description: "Standard federal public holidays observed across the United States.",
 		file: "calendars/holidays/us-holidays-2026.ics",
+		subscribers: "14,200",
 	},
 ];
 
@@ -26,6 +28,15 @@ var calendarsData = [];
 var calendarGrid = document.getElementById("calendarGrid");
 var searchInput = document.getElementById("searchInput");
 var categoryFilter = document.getElementById("categoryFilter");
+var resultsCount = document.getElementById("resultsCount");
+var activeCategoryBadge = document.getElementById("activeCategoryBadge");
+var emptyState = document.getElementById("emptyState");
+
+var themeToggleBtn = document.getElementById("themeToggleBtn");
+var themeToggleIcon = document.getElementById("themeToggleIcon");
+
+var icsFileInput = document.getElementById("icsFileInput");
+var resetDataBtn = document.getElementById("resetDataBtn");
 
 var submitModal = document.getElementById("submitModal");
 var openSubmitModalBtn = document.getElementById("openSubmitModalBtn");
@@ -36,13 +47,34 @@ var previewModal = document.getElementById("previewModal");
 var closePreviewModalBtn = document.getElementById("closePreviewModalBtn");
 var previewTitle = document.getElementById("previewTitle");
 var previewDesc = document.getElementById("previewDesc");
+var modalCategory = document.getElementById("modalCategory");
 var previewEvents = document.getElementById("previewEvents");
 var downloadIcsBtn = document.getElementById("downloadIcsBtn");
 var copyWebcalBtn = document.getElementById("copyWebcalBtn");
 
 // Initialize application
 window.addEventListener("DOMContentLoaded", function () {
+	initTheme();
 	loadCalendars();
+
+	// Theme Toggle Handler
+	if (themeToggleBtn) {
+		themeToggleBtn.addEventListener("click", toggleTheme);
+	}
+
+	// Local .ics File Upload Listener
+	if (icsFileInput) {
+		icsFileInput.addEventListener("change", handleFileUpload);
+	}
+
+	// Reset Sample Data Listener
+	if (resetDataBtn) {
+		resetDataBtn.addEventListener("click", function () {
+			if (searchInput) searchInput.value = "";
+			if (categoryFilter) categoryFilter.value = "ALL";
+			loadCalendars();
+		});
+	}
 
 	// Filter Listeners
 	if (searchInput) searchInput.addEventListener("input", filterCalendars);
@@ -51,40 +83,129 @@ window.addEventListener("DOMContentLoaded", function () {
 	// Modal Handlers
 	if (openSubmitModalBtn) {
 		openSubmitModalBtn.addEventListener("click", function () {
-			submitModal.classList.add("active");
+			if (submitModal) submitModal.classList.remove("hidden");
 		});
 	}
 
 	if (closeSubmitModalBtn) {
 		closeSubmitModalBtn.addEventListener("click", function () {
-			submitModal.classList.remove("active");
+			if (submitModal) submitModal.classList.add("hidden");
 		});
 	}
 
 	if (closePreviewModalBtn) {
 		closePreviewModalBtn.addEventListener("click", function () {
-			previewModal.classList.remove("active");
+			if (previewModal) previewModal.classList.add("hidden");
 		});
 	}
 
-	// Submit Form -> Redirect to GitHub Issue Template
+	// Submit Form -> Reads uploaded .ics file then redirects to GitHub Issue Template
 	if (submissionForm) {
 		submissionForm.addEventListener("submit", function (e) {
 			e.preventDefault();
 
-			var title = encodeURIComponent(document.getElementById("subTitle").value);
-			var category = encodeURIComponent(document.getElementById("subCategory").value);
-			var desc = encodeURIComponent(document.getElementById("subDesc").value);
-			var ics = encodeURIComponent(document.getElementById("subIcsContent").value);
+			var subTitleEl = document.getElementById("subTitle");
+			var subCategoryEl = document.getElementById("subCategory");
+			var subDescEl = document.getElementById("subDesc");
+			var fileInput = document.getElementById("subIcsFile");
 
-			var issueUrl = "https://github.com/" + GITHUB_REPO_OWNER + "/" + GITHUB_REPO_NAME + "/issues/new?template=calendar-submission.yml" + "&title=" + title + "&category=" + category + "&description=" + desc + "&ics_content=" + ics;
+			// Use encodeURIComponent to sanitize user inputs
+			var titleVal = subTitleEl ? subTitleEl.value : "";
+			var categoryVal = subCategoryEl ? subCategoryEl.value : "";
+			var descVal = subDescEl ? subDescEl.value : "";
 
-			window.open(issueUrl, "_blank");
-			submitModal.classList.remove("active");
-			submissionForm.reset();
+			if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+				alert("Please select an .ics file to submit.");
+				return;
+			}
+
+			var file = fileInput.files[0];
+			var reader = new FileReader();
+
+			reader.onload = function (event) {
+				var icsContent = event.target.result;
+
+				// GitHub Issue URLs have a character length limit (~8KB).
+				// If the .ics file is large, truncate or pass as issue body.
+				var issueTitle = encodeURIComponent("New Calendar Submission: " + titleVal);
+				var issueBody = encodeURIComponent("### Calendar Title\n" + titleVal + "\n\n" + "### Category\n" + categoryVal + "\n\n" + "### Description\n" + descVal + "\n\n" + "### ICS File Content\n```ics\n" + icsContent + "\n```");
+
+				// Option A: Pre-fill main Issue Title & Body directly (Works with default & custom templates)
+				var issueUrl = "https://github.com/" + GITHUB_REPO_OWNER + "/" + GITHUB_REPO_NAME + "/issues/new?template=calendar-submission.yml" + "&title=" + issueTitle + "&body=" + issueBody;
+
+				window.open(issueUrl, "_blank");
+
+				if (submitModal) submitModal.classList.add("hidden");
+				submissionForm.reset();
+			};
+
+			reader.onerror = function () {
+				alert("Failed to read the .ics file. Please try again.");
+			};
+
+			reader.readAsText(file);
 		});
 	}
 });
+
+// Handler for testing local .ics files uploaded via input
+function handleFileUpload(e) {
+	var file = e.target.files[0];
+	if (!file) return;
+
+	var reader = new FileReader();
+	reader.onload = function (event) {
+		var icsText = event.target.result;
+		var events = parseICS(icsText);
+
+		// Populate Modal Details
+		if (previewTitle) previewTitle.textContent = file.name.replace(/\.ics$/i, "");
+		if (previewDesc) previewDesc.textContent = "Local file test (" + (file.size / 1024).toFixed(1) + " KB)";
+		if (modalCategory) modalCategory.textContent = "Local File";
+
+		// Hide external download/webcal buttons for local files
+		if (downloadIcsBtn) downloadIcsBtn.style.display = "none";
+		if (copyWebcalBtn) copyWebcalBtn.style.display = "none";
+
+		// Render Events into Modal
+		renderParsedEvents(events);
+
+		// Show Modal
+		if (previewModal) previewModal.classList.remove("hidden");
+
+		// Clear input selection so user can re-upload
+		if (icsFileInput) icsFileInput.value = "";
+	};
+
+	reader.readAsText(file);
+}
+
+// Theme Management Functions
+function initTheme() {
+	var savedTheme = localStorage.getItem("theme");
+	if (savedTheme === "light") {
+		document.documentElement.classList.remove("dark");
+		updateThemeIcon(false);
+	} else {
+		document.documentElement.classList.add("dark");
+		updateThemeIcon(true);
+	}
+}
+
+function toggleTheme() {
+	var isDark = document.documentElement.classList.toggle("dark");
+	localStorage.setItem("theme", isDark ? "dark" : "light");
+	updateThemeIcon(isDark);
+}
+
+function updateThemeIcon(isDark) {
+	if (!themeToggleIcon) return;
+	if (isDark) {
+		themeToggleIcon.className = "fa-solid fa-sun text-amber-400";
+	} else {
+		themeToggleIcon.className = "fa-solid fa-moon text-slate-600";
+	}
+}
 
 // Load Calendars safely across local (file://) and HTTP origins
 function loadCalendars() {
@@ -115,16 +236,49 @@ function renderCalendars(items) {
 	if (!calendarGrid) return;
 	calendarGrid.innerHTML = "";
 
+	if (resultsCount) {
+		resultsCount.textContent = "Showing " + items.length + " calendar" + (items.length === 1 ? "" : "s");
+	}
+
 	if (!items || items.length === 0) {
-		calendarGrid.innerHTML = "<p style='grid-column: 1/-1; text-align: center; color: var(--text-muted);'>No matching calendars found.</p>";
+		if (emptyState) emptyState.classList.remove("hidden");
 		return;
 	}
 
+	if (emptyState) emptyState.classList.add("hidden");
+
 	items.forEach(function (item) {
 		var card = document.createElement("div");
-		card.className = "card";
+		card.className = "bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 flex flex-col justify-between shadow-sm hover:shadow-md transition-all";
 
-		card.innerHTML = '<div class="card-category">' + escapeHtml(item.category) + "</div>" + '<div class="card-title">' + escapeHtml(item.title) + "</div>" + '<div class="card-desc">' + escapeHtml(item.description) + "</div>" + '<div class="card-footer">' + '<button class="btn btn-secondary preview-btn" style="flex:1;">Preview</button>' + '<a href="' + escapeHtml(item.file) + '" class="btn" download style="text-decoration:none;">Download</a>' + "</div>";
+		card.innerHTML =
+			"<div>" +
+			'<div class="flex justify-between items-center mb-3">' +
+			'<span class="text-[10px] font-bold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/40 border border-blue-100 dark:border-blue-800/50 px-2.5 py-0.5 rounded-md uppercase tracking-wider">' +
+			escapeHtml(item.category || "General") +
+			"</span>" +
+			'<span class="text-xs font-medium text-slate-400 dark:text-slate-500"><i class="fa-solid fa-users text-slate-400 dark:text-slate-500 mr-1"></i>' +
+			escapeHtml(item.subscribers || "1,200") +
+			"</span>" +
+			"</div>" +
+			'<h3 class="text-base font-bold text-slate-900 dark:text-white mb-2 leading-snug">' +
+			escapeHtml(item.title) +
+			"</h3>" +
+			'<p class="text-xs text-slate-500 dark:text-slate-400 leading-relaxed mb-4">' +
+			escapeHtml(item.description) +
+			"</p>" +
+			"</div>" +
+			'<div class="pt-3 border-t border-slate-100 dark:border-slate-800 flex gap-2">' +
+			'<button class="preview-btn flex-1 py-2.5 bg-slate-900 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-2">' +
+			'<i class="fa-regular fa-eye"></i>' +
+			"<span>Preview & Subscribe</span>" +
+			"</button>" +
+			'<a href="' +
+			escapeHtml(item.file) +
+			'" download class="py-2.5 px-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs font-bold rounded-xl transition-all flex items-center justify-center" title="Download .ics">' +
+			'<i class="fa-solid fa-download"></i>' +
+			"</a>" +
+			"</div>";
 
 		var previewBtn = card.querySelector(".preview-btn");
 		previewBtn.addEventListener("click", function () {
@@ -139,6 +293,10 @@ function filterCalendars() {
 	var query = searchInput ? searchInput.value.toLowerCase() : "";
 	var cat = categoryFilter ? categoryFilter.value : "ALL";
 
+	if (activeCategoryBadge) {
+		activeCategoryBadge.textContent = "Category: " + cat;
+	}
+
 	var filtered = calendarsData.filter(function (item) {
 		var matchesCat = cat === "ALL" || item.category === cat;
 		var matchesSearch = item.title.toLowerCase().indexOf(query) !== -1 || item.description.toLowerCase().indexOf(query) !== -1;
@@ -152,7 +310,15 @@ function filterCalendars() {
 function openPreview(item) {
 	if (previewTitle) previewTitle.textContent = item.title;
 	if (previewDesc) previewDesc.textContent = item.description;
-	if (downloadIcsBtn) downloadIcsBtn.href = item.file;
+	if (modalCategory) modalCategory.textContent = item.category || "General";
+
+	if (downloadIcsBtn) {
+		downloadIcsBtn.style.display = "flex";
+		downloadIcsBtn.href = item.file;
+	}
+	if (copyWebcalBtn) {
+		copyWebcalBtn.style.display = "flex";
+	}
 
 	var absoluteUrl = window.location.origin + window.location.pathname.replace("index.html", "") + item.file;
 	var webcalUrl = absoluteUrl.replace(/^https?:\/\//, "webcal://");
@@ -160,17 +326,17 @@ function openPreview(item) {
 	if (copyWebcalBtn) {
 		copyWebcalBtn.onclick = function () {
 			navigator.clipboard.writeText(webcalUrl).then(function () {
-				alert("Subscription URL copied to clipboard!");
+				alert("Subscription URL copied to clipboard:\n" + webcalUrl);
 			});
 		};
 	}
 
-	if (previewEvents) previewEvents.innerHTML = "Loading events...";
-	if (previewModal) previewModal.classList.add("active");
+	if (previewEvents) previewEvents.innerHTML = '<p class="text-slate-400 dark:text-slate-500 text-xs py-2">Loading events...</p>';
+	if (previewModal) previewModal.classList.remove("hidden");
 
 	if (window.location.protocol === "file:") {
 		if (previewEvents) {
-			previewEvents.innerHTML = "<p style='color: var(--text-muted); padding: 0.5rem;'>Event preview fetch is limited when opening via file://. Run local server or host on GitHub Pages to parse remote .ics files live.</p>";
+			previewEvents.innerHTML = "<p class='text-slate-500 dark:text-slate-400 text-xs p-2'>Event preview fetch is limited when opening via file://. Run local server or host on GitHub Pages to parse remote .ics files live.</p>";
 		}
 		return;
 	}
@@ -184,7 +350,7 @@ function openPreview(item) {
 			renderParsedEvents(events);
 		})
 		.catch(function () {
-			if (previewEvents) previewEvents.innerHTML = "<p>Could not load calendar events file.</p>";
+			if (previewEvents) previewEvents.innerHTML = "<p class='text-slate-500 dark:text-slate-400 text-xs p-2'>Could not load calendar events file.</p>";
 		});
 }
 
@@ -192,7 +358,6 @@ function parseICS(icsText) {
 	var events = [];
 	if (!icsText) return events;
 
-	// 1. Unfold lines (lines split with a trailing newline + leading space/tab)
 	var unfolded = icsText.replace(/\r\n[ \t]|\r[ \t]|\n[ \t]/g, "");
 	var lines = unfolded.split(/\r\n|\n|\r/);
 
@@ -209,18 +374,14 @@ function parseICS(icsText) {
 			}
 			currentEvent = null;
 		} else if (currentEvent) {
-			// Split on the FIRST colon to separate property header from value
 			var colonIndex = line.indexOf(":");
 			if (colonIndex !== -1) {
 				var header = line.substring(0, colonIndex).toUpperCase();
 				var value = line.substring(colonIndex + 1).trim();
 
-				// Match SUMMARY or SUMMARY;PROPERTY
 				if (header === "SUMMARY" || header.indexOf("SUMMARY;") === 0) {
 					currentEvent.summary = value;
-				}
-				// Match DTSTART or DTSTART;PROPERTY
-				else if (header === "DTSTART" || header.indexOf("DTSTART;") === 0) {
+				} else if (header === "DTSTART" || header.indexOf("DTSTART;") === 0) {
 					currentEvent.dtstart = value;
 				}
 			}
@@ -234,14 +395,14 @@ function renderParsedEvents(events) {
 	if (!previewEvents) return;
 
 	if (!events || events.length === 0) {
-		previewEvents.innerHTML = "<p>No events found in this .ics file.</p>";
+		previewEvents.innerHTML = "<p class='text-slate-500 dark:text-slate-400 text-xs p-2'>No events found in this .ics file.</p>";
 		return;
 	}
 
 	var html = "";
 	events.slice(0, 10).forEach(function (e) {
 		var dateStr = formatDate(e.dtstart || "");
-		html += '<div class="event-item">' + '<div class="event-date">' + escapeHtml(dateStr) + "</div>" + '<div class="event-summary">' + escapeHtml(e.summary || "Untitled Event") + "</div>" + "</div>";
+		html += '<div class="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-800 last:border-none text-xs">' + '<span class="font-semibold text-slate-800 dark:text-slate-200">' + escapeHtml(e.summary || "Untitled Event") + "</span>" + '<span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono bg-blue-50 dark:bg-blue-900/40 px-2 py-0.5 rounded">' + escapeHtml(dateStr) + "</span>" + "</div>";
 	});
 
 	previewEvents.innerHTML = html;

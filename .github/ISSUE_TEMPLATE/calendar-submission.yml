@@ -1,52 +1,50 @@
 name: "Calendar Submission"
-description: "Submit a new .ics calendar to the iCalShare directory"
+description: "Submit a new .ics calendar to the directory"
 title: "[Calendar Submission]: "
 labels: ["calendar-submission"]
 body:
-    - type: input
-      id: title
-      attributes:
-          label: "Calendar Title"
-          description: "Name of the calendar"
-          placeholder: "e.g. Premier League 2026 Season"
-      validations:
-          required: true
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for submitting a calendar! Please ensure your `.ics` content is valid calendar data.
 
-    - type: dropdown
-      id: category
-      attributes:
-          label: "Category"
-          options:
-              - Holidays
-              - Sports
-              - Tech
-              - TV & Movies
-      validations:
-          required: true
+  - type: input
+    id: calendar_title
+    attributes:
+      label: "Calendar Title"
+      description: "The display name for this calendar."
+      placeholder: "e.g. Formula 1 2026 Season"
+    validations:
+      required: true
 
-    - type: textarea
-      id: description
-      attributes:
-          label: "Description"
-          placeholder: "Provide a brief summary of what this calendar includes..."
-      validations:
-          required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: "Category"
+      description: "Select the category that best fits this calendar."
+      options:
+        - "Holidays"
+        - "Sports"
+        - "TV & Movies"
+        - "Tech"
+        - "General"
+    validations:
+      required: true
 
-    - type: textarea
-      id: ics_content
-      attributes:
-          label: "ICS File Content"
-          description: "Paste raw VCALENDAR code content here."
-          placeholder: |
-              BEGIN:VCALENDAR
-              VERSION:2.0
-              PRODID:-//iCalShare Demo//EN
-              BEGIN:VEVENT
-              SUMMARY:Sample Event
-              DTSTART:20261001T120000Z
-              DTEND:20261001T130000Z
-              END:VEVENT
-              END:VCALENDAR
-          render: text
-      validations:
-          required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: "A short summary of what events this calendar contains."
+      placeholder: "Key event dates for..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: ics_content
+    attributes:
+      label: "ICS Content"
+      description: "Paste raw VCALENDAR / .ics text data here."
+      render: ics
+    validations:
+      required: true

@@ -1,397 +1,211 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="en" class="h-full dark">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>iCalShareHub - Open Calendar Directory</title>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>iCalShare - Public ICS Directory</title>
-    <style>
-        :root {
-            --bg-primary: #0f172a;
-            --bg-card: #1e293b;
-            --bg-input: #334155;
-            --accent: #38bdf8;
-            --accent-hover: #0284c7;
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
-            --border: #334155;
-            --card-hover: #26334d;
-        }
+		<!-- Apply saved/default dark theme immediately to prevent flashing -->
+		<script>
+			if (localStorage.getItem("theme") === "light") {
+				document.documentElement.classList.remove("dark");
+			} else {
+				document.documentElement.classList.add("dark");
+			}
+		</script>
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
+		<!-- Tailwind CSS -->
+		<script src="https://cdn.tailwindcss.com"></script>
 
-        body {
-            background-color: var(--bg-primary);
-            color: var(--text-main);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+		<!-- Google Fonts & FontAwesome -->
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
 
-        header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border);
-            padding: 1.25rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
+		<script>
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						fontFamily: {
+							sans: ["Inter", "sans-serif"],
+							mono: ["JetBrains Mono", "monospace"],
+						},
+					},
+				},
+			};
+		</script>
+	</head>
+	<body class="h-full font-sans text-slate-800 dark:text-slate-100 bg-slate-50 dark:bg-slate-950 flex flex-col antialiased selection:bg-blue-500 selection:text-white transition-colors duration-200">
+		<!-- Top Navigation Header -->
+		<header class="sticky top-0 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm">
+			<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+				<div class="flex justify-between items-center h-16">
+					<!-- Logo & Brand -->
+					<div class="flex items-center gap-3 cursor-pointer" id="brandLogo">
+						<div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
+							<i class="fa-solid fa-calendar-days text-xl"></i>
+						</div>
+						<div class="flex items-center gap-2">
+							<span class="text-xl font-extrabold tracking-tight text-slate-900 dark:text-white">iCalShare<span class="text-blue-600 dark:text-blue-400">Hub</span></span>
+							<span class="px-2 py-0.5 text-[10px] font-semibold bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300 rounded-full tracking-wider uppercase">Git-Powered</span>
+						</div>
+					</div>
 
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
+					<!-- Action Buttons & Dark Mode Toggle -->
+					<div class="flex items-center gap-3">
+						<!-- Dark Mode Toggle Button -->
+						<button id="themeToggleBtn" aria-label="Toggle Theme" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors">
+							<i id="themeToggleIcon" class="fa-solid fa-sun text-amber-400"></i>
+						</button>
 
-        .logo-icon {
-            background-color: var(--accent);
-            color: var(--bg-primary);
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
+						<button id="openSubmitModalBtn" class="inline-flex items-center gap-2 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm shadow-blue-500/30 transition-all hover:scale-[1.02]">
+							<i class="fa-solid fa-plus"></i>
+							<span>Submit Calendar</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</header>
 
-        .logo-text {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--text-main);
-        }
+		<!-- Main App Container -->
+		<main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col gap-6">
+			<!-- Hero Banner -->
+			<div class="relative bg-gradient-to-r from-slate-900 via-slate-800 to-slate-900 text-white rounded-3xl p-6 sm:p-10 shadow-xl overflow-hidden border border-slate-800">
+				<div class="absolute -right-10 -bottom-10 opacity-10 text-white pointer-events-none">
+					<i class="fa-solid fa-calendar-alt text-[280px]"></i>
+				</div>
+				<div class="relative z-10 max-w-2xl">
+					<span class="inline-block px-3 py-1 bg-blue-500/20 border border-blue-400/30 text-blue-300 text-xs font-semibold rounded-full mb-3">Community-Driven Directory</span>
+					<h1 class="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3">Find and share curated <span class="text-blue-400">.ics calendars</span>.</h1>
+					<p class="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">Subscribe to holidays, sports schedules, movie release dates, and academic terms. Submit your own `.ics` file directly via GitHub Issues—no backend server needed!</p>
 
-        .btn {
-            background-color: var(--accent);
-            color: var(--bg-primary);
-            border: none;
-            padding: 0.6rem 1.2rem;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
+					<!-- Search Bar -->
+					<div class="relative">
+						<i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+						<input type="text" id="searchInput" placeholder="Search calendars by keyword, team, or tag (e.g. NBA, Tech, Holidays)..." class="w-full pl-11 pr-4 py-3 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl text-white placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all" />
+					</div>
+				</div>
+			</div>
 
-        .btn:hover {
-            background-color: var(--accent-hover);
-        }
+			<!-- Filter Controls Bar -->
+			<div class="flex flex-col sm:flex-row gap-4 justify-between items-start sm:items-center">
+				<!-- Category Filter Pills -->
+				<div class="flex items-center gap-2 overflow-x-auto w-full sm:w-auto pb-2 sm:pb-0" id="categoryList">
+					<select id="categoryFilter" class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl px-3.5 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm cursor-pointer">
+						<option value="ALL">All Categories</option>
+						<option value="Holidays">Holidays</option>
+						<option value="Sports">Sports</option>
+						<option value="TV & Movies">TV & Movies</option>
+						<option value="Tech">Tech</option>
+					</select>
+				</div>
 
-        .btn-secondary {
-            background-color: transparent;
-            border: 1px solid var(--border);
-            color: var(--text-main);
-        }
+				<!-- Additional Utility Buttons -->
+				<div class="flex items-center gap-2 shrink-0 self-end sm:self-auto">
+					<label for="icsFileInput" class="cursor-pointer inline-flex items-center gap-1.5 px-3 py-2 text-xs font-semibold text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800 rounded-xl shadow-sm transition-colors">
+						<i class="fa-solid fa-file-arrow-up text-blue-600 dark:text-blue-400"></i>
+						<span>Test Local .ics File</span>
+					</label>
+					<input type="file" id="icsFileInput" accept=".ics,text/calendar" class="hidden" />
 
-        .btn-secondary:hover {
-            background-color: var(--bg-input);
-        }
+					<button id="resetDataBtn" class="inline-flex items-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200 transition-colors">
+						<i class="fa-solid fa-rotate-right"></i>
+						<span>Reset Sample Data</span>
+					</button>
+				</div>
+			</div>
 
-        main {
-            flex: 1;
-            max-width: 1200px;
-            width: 100%;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
+			<!-- Results Header -->
+			<div class="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400 font-medium pt-2">
+				<span id="resultsCount">Loading calendars...</span>
+				<span id="activeCategoryBadge" class="bg-slate-200/60 dark:bg-slate-800 px-2.5 py-1 rounded-md text-slate-700 dark:text-slate-300 font-mono">Category: ALL</span>
+			</div>
 
-        .hero {
-            text-align: center;
-            margin-bottom: 2.5rem;
-        }
+			<!-- Cards Grid -->
+			<div id="calendarGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				<!-- Dynamically populated cards via app.js -->
+			</div>
 
-        .hero h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.75rem;
-        }
+			<!-- Empty Search State -->
+			<div id="emptyState" class="hidden text-center py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm">
+				<i class="fa-regular fa-calendar-xmark text-4xl text-slate-400 dark:text-slate-600 mb-3"></i>
+				<h3 class="text-base font-bold text-slate-800 dark:text-slate-200">No calendars found</h3>
+				<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Try adjusting your search criteria or category filter.</p>
+			</div>
+		</main>
 
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto 1.5rem auto;
-        }
+		<!-- Preview & Subscribe Modal -->
+		<div id="previewModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+			<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative max-h-[85vh] flex flex-col">
+				<div class="flex justify-between items-start mb-4">
+					<div>
+						<span id="modalCategory" class="text-[10px] font-bold text-blue-700 dark:text-blue-300 bg-blue-100 dark:bg-blue-900/40 px-2.5 py-0.5 rounded-full uppercase tracking-wider">Category</span>
+						<h3 id="previewTitle" class="text-xl font-bold text-slate-900 dark:text-white mt-1.5">Calendar Title</h3>
+					</div>
+					<button id="closePreviewModalBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">
+						<i class="fa-solid fa-xmark"></i>
+					</button>
+				</div>
 
-        .controls {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
+				<p id="previewDesc" class="text-xs text-slate-600 dark:text-slate-300 mb-4 leading-relaxed"></p>
 
-        .search-input {
-            flex: 1;
-            min-width: 280px;
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.75rem 1rem;
-            color: var(--text-main);
-            font-size: 1rem;
-        }
+				<div class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">Upcoming Events</div>
+				<div id="previewEvents" class="flex-1 overflow-y-auto space-y-2 bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 p-3 rounded-xl mb-6 text-xs">
+					<!-- Dynamically populated events -->
+				</div>
 
-        .search-input:focus {
-            outline: 2px solid var(--accent);
-        }
+				<div class="flex gap-3">
+					<a id="downloadIcsBtn" href="#" download class="flex-1 text-center py-2.5 bg-slate-900 dark:bg-slate-100 hover:bg-slate-800 dark:hover:bg-white text-white dark:text-slate-900 font-bold text-xs rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5">
+						<i class="fa-solid fa-download"></i>
+						<span>Download .ics</span>
+					</a>
+					<button id="copyWebcalBtn" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl transition-all shadow-sm flex items-center justify-center gap-1.5">
+						<i class="fa-solid fa-link"></i>
+						<span>Copy Webcal URL</span>
+					</button>
+				</div>
+			</div>
+		</div>
 
-        .category-filter {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.75rem 1rem;
-            color: var(--text-main);
-            font-size: 1rem;
-            cursor: pointer;
-        }
+		<!-- Submit Calendar Modal -->
+		<div id="submitModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+			<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl relative">
+				<div class="flex justify-between items-center mb-4">
+					<h3 class="text-lg font-bold text-slate-900 dark:text-white">Submit New Calendar</h3>
+					<button id="closeSubmitModalBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-lg">
+						<i class="fa-solid fa-xmark"></i>
+					</button>
+				</div>
+				<p class="text-xs text-slate-500 dark:text-slate-400 mb-4 leading-relaxed">Submitting creates a pre-filled GitHub issue. Automated GitHub Actions process and publish valid calendars automatically.</p>
 
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
+				<form id="submissionForm" class="space-y-3">
+					<div>
+						<label for="subTitle" class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Calendar Title</label>
+						<input type="text" id="subTitle" required placeholder="e.g. Formula 1 2026 Season" class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500" />
+					</div>
+					<div>
+						<label for="subCategory" class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Category</label>
+						<select id="subCategory" required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500">
+							<option value="Holidays">Holidays</option>
+							<option value="Sports">Sports</option>
+							<option value="TV & Movies">TV & Movies</option>
+							<option value="Tech">Tech</option>
+						</select>
+					</div>
+					<div>
+						<label for="subDesc" class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Description</label>
+						<textarea id="subDesc" rows="2" required placeholder="Provide a short summary..." class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+					</div>
+					<div>
+						<label for="subIcsFile" class="block text-[11px] font-bold uppercase text-slate-500 dark:text-slate-400 mb-1">Upload .ICS File</label>
+						<input type="file" id="subIcsFile" accept=".ics,text/calendar" required class="w-full bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-lg p-2.5 text-xs text-slate-900 dark:text-white file:mr-3 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-500" />
+					</div>
+					<button type="submit" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow-md transition-all mt-2">Submit via GitHub Issue</button>
+				</form>
+			</div>
+		</div>
 
-        .card {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            padding: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            transition: transform 0.2s, border-color 0.2s;
-        }
-
-        .card:hover {
-            transform: translateY(-2px);
-            border-color: var(--accent);
-        }
-
-        .card-category {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--accent);
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .card-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.4;
-            margin-bottom: 1.25rem;
-            flex: 1;
-        }
-
-        .card-footer {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            margin-top: auto;
-        }
-
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background-color: rgba(0, 0, 0, 0.75);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.2s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            width: 90%;
-            max-width: 600px;
-            max-height: 90vh;
-            overflow-y: auto;
-            padding: 2rem;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .close-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            font-size: 0.9rem;
-        }
-
-        .form-group input,
-        .form-group textarea,
-        .form-group select {
-            width: 100%;
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.75rem;
-            color: var(--text-main);
-        }
-
-        .event-list {
-            margin-top: 1rem;
-            max-height: 250px;
-            overflow-y: auto;
-            background-color: var(--bg-primary);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 0.5rem;
-        }
-
-        .event-item {
-            padding: 0.6rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .event-item:last-child {
-            border-bottom: none;
-        }
-
-        .event-date {
-            font-size: 0.8rem;
-            color: var(--accent);
-        }
-
-        .event-summary {
-            font-weight: 600;
-            margin-top: 0.2rem;
-        }
-    </style>
-</head>
-
-<body>
-
-    <header>
-        <div class="logo-container">
-            <div class="logo-icon">📅</div>
-            <div class="logo-text">iCalShare</div>
-        </div>
-        <button class="btn" id="openSubmitModalBtn">+ Submit Calendar</button>
-    </header>
-
-    <main>
-        <div class="hero">
-            <h1>Discover & Subscribe to iCal Calendars</h1>
-            <p>Browse open-source `.ics` calendars contributed by the community.</p>
-        </div>
-
-        <div class="controls">
-            <input type="text" id="searchInput" class="search-input"
-                placeholder="Search calendars by keyword or title..." />
-            <select id="categoryFilter" class="category-filter">
-                <option value="ALL">All Categories</option>
-                <option value="Holidays">Holidays</option>
-                <option value="Sports">Sports</option>
-                <option value="Tech">Tech</option>
-                <option value="TV & Movies">TV & Movies</option>
-            </select>
-        </div>
-
-        <div id="calendarGrid" class="grid">
-            <!-- Calendar Cards populated dynamically by app.js -->
-        </div>
-    </main>
-
-    <!-- Submit Modal -->
-    <div id="submitModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2>Submit a New Calendar</h2>
-                <button class="close-btn" id="closeSubmitModalBtn">&times;</button>
-            </div>
-            <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
-                Submitting opens a GitHub Issue with your calendar data pre-filled. Our GitHub Action workflow
-                automatically validates and builds the `.ics` file into our system!
-            </p>
-            <form id="submissionForm">
-                <div class="form-group">
-                    <label for="subTitle">Calendar Title</label>
-                    <input type="text" id="subTitle" required placeholder="e.g. Formula 1 2026 Season" />
-                </div>
-                <div class="form-group">
-                    <label for="subCategory">Category</label>
-                    <select id="subCategory" required>
-                        <option value="Holidays">Holidays</option>
-                        <option value="Sports">Sports</option>
-                        <option value="Tech">Tech</option>
-                        <option value="TV & Movies">TV & Movies</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="subDesc">Description</label>
-                    <textarea id="subDesc" rows="3" required
-                        placeholder="Describe what this calendar tracks..."></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="subIcsContent">ICS File Content (Paste raw .ics code)</label>
-                    <textarea id="subIcsContent" rows="6" required placeholder="BEGIN:VCALENDAR..."></textarea>
-                </div>
-                <button type="submit" class="btn" style="width: 100%;">Create GitHub Submission</button>
-            </form>
-        </div>
-    </div>
-
-    <!-- Preview Modal -->
-    <div id="previewModal" class="modal-overlay">
-        <div class="modal">
-            <div class="modal-header">
-                <h2 id="previewTitle">Calendar Title</h2>
-                <button class="close-btn" id="closePreviewModalBtn">&times;</button>
-            </div>
-            <p id="previewDesc" style="color: var(--text-muted); margin-bottom: 1rem;"></p>
-            <p><strong>Upcoming Events:</strong></p>
-            <div id="previewEvents" class="event-list">Loading events...</div>
-            <div style="margin-top: 1.5rem; display: flex; gap: 0.5rem;">
-                <a id="downloadIcsBtn" class="btn" download
-                    style="text-decoration: none; text-align: center; flex: 1;">Download .ics</a>
-                <button id="copyWebcalBtn" class="btn btn-secondary" style="flex: 1;">Copy Subscribe URL</button>
-            </div>
-        </div>
-    </div>
-
-    <script src="app.js"></script>
-</body>
-
+		<!-- External JS File -->
+		<script src="app.js"></script>
+	</body>
 </html>
