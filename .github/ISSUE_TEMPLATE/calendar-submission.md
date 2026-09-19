@@ -11,6 +11,7 @@ assignees: 'CreativeCodeCat'
 
 
 ### Category
+<!-- Available categories: Tech, Holidays, Sports, TV & Movies, Gaming, Music, Finance, Education, Health & Fitness, Entertainment, Science, Community, Other -->
 
 
 ### Description

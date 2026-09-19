@@ -2,14 +2,11 @@ name: Process Calendar Submission
 
 on:
     issues:
-        types: [opened, labeled]
+        types: [opened]
 
 jobs:
     process-calendar:
-        # Prevents double execution when an issue is opened with initial labels
-        if: |
-            contains(github.event.issue.labels.*.name, 'calendar-submission') &&
-            (github.event.action == 'opened' || github.event.label.name == 'calendar-submission')
+        if: contains(github.event.issue.labels.*.name, 'calendar-submission')
         runs-on: ubuntu-latest
         permissions:
             contents: write
@@ -33,27 +30,44 @@ jobs:
 
                       const issueBody = context.payload.issue.body || '';
 
-                      // Helper function to extract content under a specific '### Header'
                       function getSection(label) {
                         const sections = issueBody.split(/^###\s+/m);
                         const match = sections.find(s => s.toLowerCase().startsWith(label.toLowerCase()));
                         if (!match) return '';
 
-                        // Strip the header line and trim remaining text
                         const lines = match.split('\n');
                         lines.shift();
                         return lines.join('\n').trim();
                       }
 
-                      // Parse parameters from template
+                      // Allowed categories whitelist
+                      const ALLOWED_CATEGORIES = [
+                        "Tech",
+                        "Holidays",
+                        "Sports",
+                        "TV & Movies",
+                        "Gaming",
+                        "Music",
+                        "Finance",
+                        "Education",
+                        "Health & Fitness",
+                        "Entertainment",
+                        "Science",
+                        "Community",
+                        "Other"
+                      ];
+
                       const title = getSection('Calendar Title') || context.payload.issue.title.replace(/^New Calendar:\s*/i, '').trim();
-                      const category = getSection('Category') || 'General';
+                      let rawCategory = getSection('Category');
+
+                      // Normalize category or fallback to 'Other'
+                      let category = ALLOWED_CATEGORIES.find(
+                        c => c.toLowerCase() === rawCategory.toLowerCase()
+                      ) || 'Other';
+
                       const description = getSection('Description') || 'No description provided.';
 
-                      // Extract ICS content block
                       let rawIcs = getSection('ICS Content');
-
-                      // Clean out Markdown codeblock wrappers (```ics ... ```)
                       rawIcs = rawIcs.replace(/^```[a-z]*\r?\n?/i, '').replace(/\r?\n?```$/i, '').trim();
 
                       if (!rawIcs || !rawIcs.includes('BEGIN:VCALENDAR')) {
@@ -68,20 +82,15 @@ jobs:
                         return;
                       }
 
-                      // Generate clean file IDs & directories
                       const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || `calendar-${context.payload.issue.number}`;
-                      const categoryDir = category.toLowerCase().replace(/[^a-z0-9]+/g, '') || 'general';
+                      const categoryDir = category.toLowerCase().replace(/[^a-z0-9]+/g, '') || 'other';
                       const targetFolder = path.join(process.cwd(), 'calendars', categoryDir);
                       const targetIcsPath = path.join(targetFolder, `${slug}.ics`);
                       const relativeFilePath = `calendars/${categoryDir}/${slug}.ics`;
 
-                      // Ensure destination directory exists
                       fs.mkdirSync(targetFolder, { recursive: true });
-
-                      // Save .ics file content
                       fs.writeFileSync(targetIcsPath, rawIcs, 'utf8');
 
-                      // Update calendars.json database
                       const jsonPath = path.join(process.cwd(), 'calendars.json');
                       let db = [];
                       if (fs.existsSync(jsonPath)) {
@@ -92,7 +101,6 @@ jobs:
                         }
                       }
 
-                      // Upsert entry in JSON
                       const existingIndex = db.findIndex(item => item.id === slug);
                       const entry = {
                         id: slug,
@@ -110,15 +118,13 @@ jobs:
 
                       fs.writeFileSync(jsonPath, JSON.stringify(db, null, 2), 'utf8');
 
-                      // Post success comment
                       await github.rest.issues.createComment({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         issue_number: context.payload.issue.number,
-                        body: `🎉 **Calendar Published Successfully!**\n\n- **Title:** ${title}\n- **Category:** ${category}\n- **Path:** \`${relativeFilePath}\`\n\nYour submission is now live in the repository database!`
+                        body: `🎉 **Calendar Published Successfully!**\n\n- **Title:** ${title}\n- **Category:** ${category}\n- **Path:** \`${relativeFilePath}\`\n\nYour submission is now live in the directory!`
                       });
 
-                      // Close Issue automatically
                       await github.rest.issues.update({
                         owner: context.repo.owner,
                         repo: context.repo.repo,

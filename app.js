@@ -108,7 +108,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			var fileInput = document.getElementById("subIcsFile");
 
 			var titleVal = subTitleEl ? subTitleEl.value.trim() : "";
-			var categoryVal = subCategoryEl ? subCategoryEl.value : "General";
+			var categoryVal = subCategoryEl ? subCategoryEl.value : "Other";
 			var descVal = subDescEl ? subDescEl.value.trim() : "";
 
 			if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
