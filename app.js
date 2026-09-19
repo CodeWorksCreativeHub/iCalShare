@@ -98,56 +98,56 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 
 	// Submit Form -> Reads uploaded .ics file and pre-fills GitHub YAML issue template fields
-if (submissionForm) {
-    submissionForm.addEventListener("submit", function (e) {
-        e.preventDefault();
+	if (submissionForm) {
+		submissionForm.addEventListener("submit", function (e) {
+			e.preventDefault();
 
-        var subTitleEl = document.getElementById("subTitle");
-        var subCategoryEl = document.getElementById("subCategory");
-        var subDescEl = document.getElementById("subDesc");
-        var fileInput = document.getElementById("subIcsFile");
+			var subTitleEl = document.getElementById("subTitle");
+			var subCategoryEl = document.getElementById("subCategory");
+			var subDescEl = document.getElementById("subDesc");
+			var fileInput = document.getElementById("subIcsFile");
 
-        var titleVal = subTitleEl ? subTitleEl.value.trim() : "";
-        var categoryVal = subCategoryEl ? subCategoryEl.value : "General";
-        var descVal = subDescEl ? subDescEl.value.trim() : "";
+			var titleVal = subTitleEl ? subTitleEl.value.trim() : "";
+			var categoryVal = subCategoryEl ? subCategoryEl.value : "General";
+			var descVal = subDescEl ? subDescEl.value.trim() : "";
 
-        if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
-            alert("Please select an .ics file to submit.");
-            return;
-        }
+			if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+				alert("Please select an .ics file to submit.");
+				return;
+			}
 
-        var file = fileInput.files[0];
-        var reader = new FileReader();
+			var file = fileInput.files[0];
+			var reader = new FileReader();
 
-        reader.onload = function (event) {
-            var icsContent = event.target.result;
+			reader.onload = function (event) {
+				var icsContent = event.target.result;
 
-            // Notice the "form[...]" prefix for field IDs!
-            var params = new URLSearchParams({
-                template: "calendar-submission.yml",
-                title: "New Calendar: " + titleVal,
-                "form[calendar_title]": titleVal,
-                "form[category]": categoryVal,
-                "form[description]": descVal,
-                "form[ics_content]": icsContent
-            });
+				// Notice the "form[...]" prefix for field IDs!
+				var params = new URLSearchParams({
+					template: "calendar-submission.yml",
+					title: "New Calendar: " + titleVal,
+					"form[calendar_title]": titleVal,
+					"form[category]": categoryVal,
+					"form[description]": descVal,
+					"form[ics_content]": icsContent,
+				});
 
-            var queryString = params.toString().replace(/\+/g, "%20");
-            var issueUrl = "https://github.com/" + GITHUB_REPO_OWNER + "/" + GITHUB_REPO_NAME + "/issues/new?" + queryString;
+				var queryString = params.toString().replace(/\+/g, "%20");
+				var issueUrl = "https://github.com/" + GITHUB_REPO_OWNER + "/" + GITHUB_REPO_NAME + "/issues/new?" + queryString;
 
-            window.open(issueUrl, "_blank");
+				window.open(issueUrl, "_blank");
 
-            if (submitModal) submitModal.classList.add("hidden");
-            submissionForm.reset();
-        };
+				if (submitModal) submitModal.classList.add("hidden");
+				submissionForm.reset();
+			};
 
-        reader.onerror = function () {
-            alert("Failed to read the .ics file. Please try again.");
-        };
+			reader.onerror = function () {
+				alert("Failed to read the .ics file. Please try again.");
+			};
 
-        reader.readAsText(file);
-    });
-
+			reader.readAsText(file);
+		});
+	}
 });
 
 // Handler for testing local .ics files uploaded via input
