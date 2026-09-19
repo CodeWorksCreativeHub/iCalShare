@@ -19,37 +19,55 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v4
               with:
-                  node-version: "20"
+                  node-version: "24"
 
             - name: Process Issue Data
-              uses: actions/github-script@v7
+              uses: actions/github-script@v8
               with:
                   script: |
                       const fs = require('fs');
                       const path = require('path');
 
-                      const issueBody = context.payload.issue.body;
+                      const issueBody = context.payload.issue.body || '';
 
-                      // Helper to parse markdown section from issue template
+                      // Helper function to extract content under a specific '### Header'
                       function getSection(label) {
-                        const regex = new RegExp(`### ${label}\\s*\\n\\n([\\s\\S]*?)(?=\\n\\n### |$)`);
-                        const match = issueBody.match(regex);
-                        return match ? match[1].trim() : '';
+                        const sections = issueBody.split(/^###\s+/m);
+                        const match = sections.find(s => s.toLowerCase().startsWith(label.toLowerCase()));
+                        if (!match) return '';
+
+                        // Strip the header line and trim remaining text
+                        const lines = match.split('\n');
+                        lines.shift();
+                        return lines.join('\n').trim();
                       }
 
-                      const title = getSection('Calendar Title') || context.payload.issue.title.replace('[Calendar Submission]:', '').trim();
-                      const category = getSection('Category') || 'Tech';
+                      // Parse parameters from template
+                      const title = getSection('Calendar Title') || context.payload.issue.title.replace(/^New Calendar:\s*/i, '').trim();
+                      const category = getSection('Category') || 'General';
                       const description = getSection('Description') || 'No description provided.';
-                      const rawIcs = getSection('ICS File Content').replace(/^```(text|ics)?/g, '').replace(/```$/g, '').trim();
+
+                      // Extract ICS content block
+                      let rawIcs = getSection('ICS Content');
+
+                      // Clean out Markdown codeblock wrappers (```ics ... ```)
+                      rawIcs = rawIcs.replace(/^```[a-z]*\r?\n?/i, '').replace(/\r?\n?```$/i, '').trim();
 
                       if (!rawIcs || !rawIcs.includes('BEGIN:VCALENDAR')) {
                         core.setFailed('Invalid ICS content provided in issue body.');
+
+                        await github.rest.issues.createComment({
+                          owner: context.repo.owner,
+                          repo: context.repo.repo,
+                          issue_number: context.payload.issue.number,
+                          body: '❌ **Submission Failed:** Valid `.ics` calendar content (`BEGIN:VCALENDAR`) was not found in the issue body.'
+                        });
                         return;
                       }
 
-                      // Generate clean ID & paths
-                      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-                      const categoryDir = category.toLowerCase().replace(/[^a-z0-9]+/g, '');
+                      // Generate clean file IDs & directories
+                      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || `calendar-${context.payload.issue.number}`;
+                      const categoryDir = category.toLowerCase().replace(/[^a-z0-9]+/g, '') || 'general';
                       const targetFolder = path.join(process.cwd(), 'calendars', categoryDir);
                       const targetIcsPath = path.join(targetFolder, `${slug}.ics`);
                       const relativeFilePath = `calendars/${categoryDir}/${slug}.ics`;
@@ -60,14 +78,18 @@ jobs:
                       // Save .ics file content
                       fs.writeFileSync(targetIcsPath, rawIcs, 'utf8');
 
-                      // Update calendars.json
+                      // Update calendars.json database
                       const jsonPath = path.join(process.cwd(), 'calendars.json');
                       let db = [];
                       if (fs.existsSync(jsonPath)) {
-                        db = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+                        try {
+                          db = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+                        } catch (e) {
+                          db = [];
+                        }
                       }
 
-                      // Replace existing or append new entry
+                      // Upsert entry in JSON
                       const existingIndex = db.findIndex(item => item.id === slug);
                       const entry = {
                         id: slug,
@@ -85,12 +107,12 @@ jobs:
 
                       fs.writeFileSync(jsonPath, JSON.stringify(db, null, 2), 'utf8');
 
-                      // Post success comment to GitHub Issue
+                      // Post success comment
                       await github.rest.issues.createComment({
                         owner: context.repo.owner,
                         repo: context.repo.repo,
                         issue_number: context.payload.issue.number,
-                        body: `🎉 **Calendar Published Successfully!**\n\n- **Title:** ${title}\n- **Category:** ${category}\n- **Saved To:** \`${relativeFilePath}\`\n\nYour submission is now live in the directory!`
+                        body: `🎉 **Calendar Published Successfully!**\n\n- **Title:** ${title}\n- **Category:** ${category}\n- **Path:** \`${relativeFilePath}\`\n\nYour submission is now live in the repository database!`
                       });
 
                       // Close Issue automatically
