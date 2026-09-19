@@ -10,7 +10,6 @@ var DEFAULT_CALENDARS = [
 		category: "Tech",
 		description: "Key tech event dates for developers, AI researchers, and engineers.",
 		file: "calendars/tech/tech-conferences-2026.ics",
-		subscribers: "6,400",
 	},
 	{
 		id: "us-holidays-2026",
@@ -18,7 +17,6 @@ var DEFAULT_CALENDARS = [
 		category: "Holidays",
 		description: "Standard federal public holidays observed across the United States.",
 		file: "calendars/holidays/us-holidays-2026.ics",
-		subscribers: "14,200",
 	},
 ];
 
@@ -99,7 +97,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 	}
 
-	// Submit Form -> Reads uploaded .ics file then redirects to GitHub Issue Template
+	// Submit Form -> Reads uploaded .ics file then opens pre-filled GitHub Issue
 	if (submissionForm) {
 		submissionForm.addEventListener("submit", function (e) {
 			e.preventDefault();
@@ -109,9 +107,8 @@ window.addEventListener("DOMContentLoaded", function () {
 			var subDescEl = document.getElementById("subDesc");
 			var fileInput = document.getElementById("subIcsFile");
 
-			// Use encodeURIComponent to sanitize user inputs
 			var titleVal = subTitleEl ? subTitleEl.value : "";
-			var categoryVal = subCategoryEl ? subCategoryEl.value : "";
+			var categoryVal = subCategoryEl ? subCategoryEl.value : "General";
 			var descVal = subDescEl ? subDescEl.value : "";
 
 			if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
@@ -125,13 +122,7 @@ window.addEventListener("DOMContentLoaded", function () {
 			reader.onload = function (event) {
 				var icsContent = event.target.result;
 
-				// GitHub Issue URLs have a character length limit (~8KB).
-				// If the .ics file is large, truncate or pass as issue body.
-				var issueTitle = encodeURIComponent("New Calendar Submission: " + titleVal);
-				var issueBody = encodeURIComponent("### Calendar Title\n" + titleVal + "\n\n" + "### Category\n" + categoryVal + "\n\n" + "### Description\n" + descVal + "\n\n" + "### ICS File Content\n```ics\n" + icsContent + "\n```");
-
-				// Option A: Pre-fill main Issue Title & Body directly (Works with default & custom templates)
-				var issueUrl = "https://github.com/" + GITHUB_REPO_OWNER + "/" + GITHUB_REPO_NAME + "/issues/new?template=calendar-submission.yml" + "&title=" + issueTitle + "&body=" + issueBody;
+				var issueUrl = "https://github.com/" + GITHUB_REPO_OWNER + "/" + GITHUB_REPO_NAME + "/issues/new?template=calendar-submission.yml" + "&title=" + encodeURIComponent("New Calendar: " + titleVal) + "&calendar_title=" + encodeURIComponent(titleVal) + "&category=" + encodeURIComponent(categoryVal) + "&description=" + encodeURIComponent(descVal) + "&ics_content=" + encodeURIComponent(icsContent);
 
 				window.open(issueUrl, "_blank");
 
@@ -173,7 +164,7 @@ function handleFileUpload(e) {
 		// Show Modal
 		if (previewModal) previewModal.classList.remove("hidden");
 
-		// Clear input selection so user can re-upload
+		// Clear input selection
 		if (icsFileInput) icsFileInput.value = "";
 	};
 
@@ -256,9 +247,6 @@ function renderCalendars(items) {
 			'<div class="flex justify-between items-center mb-3">' +
 			'<span class="text-[10px] font-bold text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/40 border border-blue-100 dark:border-blue-800/50 px-2.5 py-0.5 rounded-md uppercase tracking-wider">' +
 			escapeHtml(item.category || "General") +
-			"</span>" +
-			'<span class="text-xs font-medium text-slate-400 dark:text-slate-500"><i class="fa-solid fa-users text-slate-400 dark:text-slate-500 mr-1"></i>' +
-			escapeHtml(item.subscribers || "1,200") +
 			"</span>" +
 			"</div>" +
 			'<h3 class="text-base font-bold text-slate-900 dark:text-white mb-2 leading-snug">' +
