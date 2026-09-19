@@ -2,11 +2,14 @@ name: Process Calendar Submission
 
 on:
     issues:
-        types: [labeled, opened]
+        types: [opened, labeled]
 
 jobs:
     process-calendar:
-        if: contains(github.event.issue.labels.*.name, 'calendar-submission')
+        # Prevents double execution when an issue is opened with initial labels
+        if: |
+            contains(github.event.issue.labels.*.name, 'calendar-submission') &&
+            (github.event.action == 'opened' || github.event.label.name == 'calendar-submission')
         runs-on: ubuntu-latest
         permissions:
             contents: write
