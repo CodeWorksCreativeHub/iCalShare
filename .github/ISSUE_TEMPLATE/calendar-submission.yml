@@ -1,50 +1,37 @@
-name: "Calendar Submission"
-description: "Submit a new .ics calendar to the directory"
-title: "[Calendar Submission]: "
+name: Calendar Submission
+description: Submit a new .ics calendar
+title: "New Calendar: "
 labels: ["calendar-submission"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        Thank you for submitting a calendar! Please ensure your `.ics` content is valid calendar data.
-
   - type: input
     id: calendar_title
     attributes:
-      label: "Calendar Title"
-      description: "The display name for this calendar."
-      placeholder: "e.g. Formula 1 2026 Season"
+      label: Calendar Title
     validations:
       required: true
 
   - type: dropdown
     id: category
     attributes:
-      label: "Category"
-      description: "Select the category that best fits this calendar."
+      label: Category
       options:
-        - "Holidays"
-        - "Sports"
-        - "TV & Movies"
-        - "Tech"
-        - "General"
+        - Tech
+        - Holidays
+        - Sports
+        - TV & Movies
+        - General
     validations:
       required: true
 
   - type: textarea
     id: description
     attributes:
-      label: "Description"
-      description: "A short summary of what events this calendar contains."
-      placeholder: "Key event dates for..."
-    validations:
-      required: true
+      label: Description
 
   - type: textarea
     id: ics_content
     attributes:
-      label: "ICS Content"
-      description: "Paste raw VCALENDAR / .ics text data here."
-      render: ics
+      label: ICS File Content
+      render: text
     validations:
       required: true
