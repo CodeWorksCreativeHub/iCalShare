@@ -19,5 +19,12 @@
     "category": "Science",
     "description": "Astronomical start of spring, summer, autumn, and winter in the UK for the next 10 years.",
     "file": "calendars/science/uk-seasons.ics"
+  },
+  {
+    "id": "games",
+    "title": "Video Game Releases",
+    "category": "Entertainment",
+    "description": "Upcoming video game release dates across consoles and platforms.",
+    "file": "calendars/entertainment/games.ics"
   }
 ]
