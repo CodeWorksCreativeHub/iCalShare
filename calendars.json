@@ -12,5 +12,12 @@
     "category": "Holidays",
     "description": "UK bank holidays and public holidays for easy planning throughout the year.",
     "file": "calendars/holidays/uk-holidays.ics"
+  },
+  {
+    "id": "uk-seasons",
+    "title": "UK Season Changes",
+    "category": "Science",
+    "description": "Astronomical start of spring, summer, autumn, and winter in the UK for the next 10 years.",
+    "file": "calendars/science/uk-seasons.ics"
   }
 ]
