@@ -21,10 +21,17 @@
     "file": "calendars/science/uk-seasons.ics"
   },
   {
-    "id": "games",
-    "title": "Video Game Releases",
+    "id": "us-games",
+    "title": "US Video Game Releases",
     "category": "Entertainment",
-    "description": "Upcoming video game release dates across consoles and platforms.",
-    "file": "calendars/entertainment/games.ics"
+    "description": "Upcoming video game release dates in the United States across consoles and platforms.",
+    "file": "calendars/entertainment/us-games.ics"
+  },
+  {
+    "id": "uk-games",
+    "title": "UK Video Game Releases",
+    "category": "Entertainment",
+    "description": "Upcoming video game release dates in the United Kingdom across consoles and platforms.",
+    "file": "calendars/entertainment/uk-games.ics"
   }
 ]
