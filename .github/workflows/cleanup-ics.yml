@@ -78,8 +78,10 @@ jobs:
           node cleanup.js
           rm cleanup.js
 
-      - name: Commit and push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: "chore: remove calendar events older than 5 days"
-          file_pattern: "*.ics"
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add calendars/ calendars.json
+          git commit -m "chore: remove calendar events older than 5 days"
+          git push
