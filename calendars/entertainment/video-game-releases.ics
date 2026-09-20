@@ -8,17 +8,6 @@ X-APPLE-LANGUAGE:en
 X-APPLE-REGION:GB
 
 BEGIN:VEVENT
-UID:game-resident-evil-requiem@icalshare-hub
-SUMMARY:Resident Evil Requiem
-DTSTART;VALUE=DATE:20260227
-DTEND;VALUE=DATE:20260228
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Date retained for reference although it falls before the three-year window.
-LOCATION:United Kingdom
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
 UID:game-gears-eday@icalshare-hub
 SUMMARY:Gears of War: E-Day
 DTSTART;VALUE=DATE:20261006
@@ -534,5 +523,4 @@ LOCATION:United Kingdom
 STATUS:TENTATIVE
 TRANSP:TRANSPARENT
 END:VEVENT
-
 END:VCALENDAR
