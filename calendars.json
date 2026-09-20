@@ -59,7 +59,7 @@
         "id": "video-game-releases",
         "title": "Video Game Releases",
         "category": "Entertainment",
-        "description": "Upcoming video game release dates across consoles and platforms.",
+        "description": "Your go-to calendar for tracking video game release dates across all platforms.",
         "file": "calendars/entertainment/video-game-releases.ics"
     }
 ]
