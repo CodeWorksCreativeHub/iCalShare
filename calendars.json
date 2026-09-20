@@ -1,10 +1,10 @@
 [
   {
-    "id": "us-holidays-2026",
-    "title": "US Federal Holidays 2026",
+    "id": "us-holidays",
+    "title": "US Federal Holidays",
     "category": "Holidays",
     "description": "Standard federal public holidays observed across the United States.",
-    "file": "calendars/holidays/us-holidays-2026.ics"
+    "file": "calendars/holidays/us-holidays.ics"
   },
   {
     "id": "uk-holidays",
