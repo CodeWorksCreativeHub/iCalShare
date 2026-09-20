@@ -19,13 +19,432 @@ TRANSP:TRANSPARENT
 END:VEVENT
 
 BEGIN:VEVENT
-UID:game-490430@icalshare-hub
-SUMMARY:Prince of Persia: The Sands of Time Remake
-DTSTART;VALUE=DATE:20261231
-DTEND;VALUE=DATE:20270101
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox One\, PlayStation 4\, Xbox Series S/X. Release is marked TBA in the source data.
+UID:game-gta6@icalshare-hub
+SUMMARY:Grand Theft Auto VI
+DTSTART;VALUE=DATE:20261119
+DTEND;VALUE=DATE:20261120
+DESCRIPTION:Platforms: PlayStation 5\, Xbox Series X/S. Confirmed release date currently listed for November 19\, 2026.
 LOCATION:United Kingdom
 STATUS:CONFIRMED
 TRANSP:TRANSPARENT
 END:VEVENT
+
+BEGIN:VEVENT
+UID:game-prince-persia-sands-time-remake@icalshare-hub
+SUMMARY:Prince of Persia: The Sands of Time Remake
+DTSTART;VALUE=DATE:20261231
+DTEND;VALUE=DATE:20270101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox One\, PlayStation 4\, Xbox Series S/X. TBA release date in source data; December 31 is used as a calendar placeholder.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-resident-evil-requiem@icalshare-hub
+SUMMARY:Resident Evil Requiem
+DTSTART;VALUE=DATE:20260227
+DTEND;VALUE=DATE:20260228
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Date retained for reference although it falls before the three-year window.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-call-of-duty-mw4@icalshare-hub
+SUMMARY:Call of Duty: Modern Warfare 4
+DTSTART;VALUE=DATE:20261023
+DTEND;VALUE=DATE:20261024
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-phantom-blade-zero@icalshare-hub
+SUMMARY:Phantom Blade Zero
+DTSTART;VALUE=DATE:20261029
+DTEND;VALUE=DATE:20261030
+DESCRIPTION:Platforms: PC\, PlayStation 5.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-final-fantasy-resonance@icalshare-hub
+SUMMARY:Final Fantasy Resonance
+DTSTART;VALUE=DATE:20261022
+DTEND;VALUE=DATE:20261023
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch\, Nintendo Switch 2.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-gears-eday@icalshare-hub
+SUMMARY:Gears of War: E-Day
+DTSTART;VALUE=DATE:20261006
+DTEND;VALUE=DATE:20261007
+DESCRIPTION:Platforms: PC\, Xbox Series X/S.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-enhrouded@icalshare-hub
+SUMMARY:Enshrouded
+DTSTART;VALUE=DATE:20261015
+DTEND;VALUE=DATE:20261016
+DESCRIPTION:Platforms: PC\, PlayStation 5.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-007-first-light@icalshare-hub
+SUMMARY:007 First Light
+DTSTART;VALUE=DATE:20270531
+DTEND;VALUE=DATE:20270601
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Release window currently 2027; placeholder date used.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-kingdom-hearts-4@icalshare-hub
+SUMMARY:Kingdom Hearts IV
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Square Enix has announced a late 2027 release window; exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-persona4-revival@icalshare-hub
+SUMMARY:Persona 4 Revival
+DTSTART;VALUE=DATE:20270218
+DTEND;VALUE=DATE:20270219
+DESCRIPTION:Platforms: Xbox Series X/S\, PC. Additional platforms may vary by region and announcement.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-bloodstained-scarlet-engagement@icalshare-hub
+SUMMARY:Bloodstained: The Scarlet Engagement
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Confirmed for 2027; exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-crazy-taxi-world-tour@icalshare-hub
+SUMMARY:Crazy Taxi: World Tour
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Confirmed for 2027; exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-wo-long-2@icalshare-hub
+SUMMARY:Wo Long 2: Wings of Ember
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Confirmed for 2027; exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-tomb-raider-legacy-atlantis@icalshare-hub
+SUMMARY:Tomb Raider: Legacy of Atlantis
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: TBA. Currently listed for 2027; exact date and platforms TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-clockwork-revolution@icalshare-hub
+SUMMARY:Clockwork Revolution
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, Xbox Series X/S. Currently listed for 2027; exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-lords-fallen-2@icalshare-hub
+SUMMARY:Lords of the Fallen II
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Currently listed for 2027; exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-maneater-2@icalshare-hub
+SUMMARY:Maneater 2
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Currently listed for 2027; exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-state-of-decay-3@icalshare-hub
+SUMMARY:State of Decay 3
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, Xbox Series X/S. Release window remains unconfirmed; currently associated with 2027-era release schedules. Exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-wolf-among-us-2@icalshare-hub
+SUMMARY:The Wolf Among Us 2
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release window TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-alien-isolation-2@icalshare-hub
+SUMMARY:Alien: Isolation 2
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: TBA. Release window TBA; currently tracked as an upcoming title.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-witcher3-songs-past@icalshare-hub
+SUMMARY:The Witcher 3: Songs of the Past
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Expansion confirmed for 2027; exact date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-the-witcher-4@icalshare-hub
+SUMMARY:The Witcher 4
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: TBA. CD Projekt Red is targeting a 2028 release window; exact date and platforms TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-diablo-5@icalshare-hub
+SUMMARY:Diablo V
+DTSTART;VALUE=DATE:20290331
+DTEND;VALUE=DATE:20290401
+DESCRIPTION:Platforms: TBA. Currently reported for Q1 2029; exact release date and platforms TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-marvel-blade@icalshare-hub
+SUMMARY:Marvel's Blade
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-intergalactic-heretic-prophet@icalshare-hub
+SUMMARY:Intergalactic: The Heretic Prophet
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: PlayStation 5. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-perfect-dark@icalshare-hub
+SUMMARY:Perfect Dark
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-fable@icalshare-hub
+SUMMARY:Fable
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-contraband@icalshare-hub
+SUMMARY:Contraband
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-new-mass-effect@icalshare-hub
+SUMMARY:Mass Effect
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: TBA. New Mass Effect title in development; release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-bioshock-4@icalshare-hub
+SUMMARY:BioShock 4
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: TBA. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-persona-6@icalshare-hub
+SUMMARY:Persona 6
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: TBA. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-light-no-fire@icalshare-hub
+SUMMARY:Light No Fire
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-control-2@icalshare-hub
+SUMMARY:Control 2
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-kotor-remake@icalshare-hub
+SUMMARY:Star Wars: Knights of the Old Republic Remake
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: TBA. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-star-wars-eclipse@icalshare-hub
+SUMMARY:Star Wars Eclipse
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: TBA. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-max-payne-remakes@icalshare-hub
+SUMMARY:Max Payne 1 & 2 Remake
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-assassins-creed-hexe@icalshare-hub
+SUMMARY:Assassin's Creed Hexe
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-od@icalshare-hub
+SUMMARY:OD
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: Xbox Series X/S\, PC. Hideo Kojima project; release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
 END:VCALENDAR
