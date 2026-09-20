@@ -8,6 +8,28 @@ X-APPLE-LANGUAGE:en
 X-APPLE-REGION:GB
 
 BEGIN:VEVENT
+UID:game-resident-evil-requiem@icalshare-hub
+SUMMARY:Resident Evil Requiem
+DTSTART;VALUE=DATE:20260227
+DTEND;VALUE=DATE:20260228
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Date retained for reference although it falls before the three-year window.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-gears-eday@icalshare-hub
+SUMMARY:Gears of War: E-Day
+DTSTART;VALUE=DATE:20261006
+DTEND;VALUE=DATE:20261007
+DESCRIPTION:Platforms: PC\, Xbox Series X/S.
+LOCATION:United Kingdom
+STATUS:CONFIRMED
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
 UID:game-1018102@icalshare-hub
 SUMMARY:Castlevania: Belmont's Curse
 DTSTART;VALUE=DATE:20261015
@@ -19,33 +41,22 @@ TRANSP:TRANSPARENT
 END:VEVENT
 
 BEGIN:VEVENT
-UID:game-gta6@icalshare-hub
-SUMMARY:Grand Theft Auto VI
-DTSTART;VALUE=DATE:20261119
-DTEND;VALUE=DATE:20261120
-DESCRIPTION:Platforms: PlayStation 5\, Xbox Series X/S. Confirmed release date currently listed for November 19\, 2026.
+UID:game-enhrouded@icalshare-hub
+SUMMARY:Enshrouded
+DTSTART;VALUE=DATE:20261015
+DTEND;VALUE=DATE:20261016
+DESCRIPTION:Platforms: PC\, PlayStation 5.
 LOCATION:United Kingdom
 STATUS:CONFIRMED
 TRANSP:TRANSPARENT
 END:VEVENT
 
 BEGIN:VEVENT
-UID:game-prince-persia-sands-time-remake@icalshare-hub
-SUMMARY:Prince of Persia: The Sands of Time Remake
-DTSTART;VALUE=DATE:20261231
-DTEND;VALUE=DATE:20270101
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox One\, PlayStation 4\, Xbox Series S/X. TBA release date in source data; December 31 is used as a calendar placeholder.
-LOCATION:United Kingdom
-STATUS:TENTATIVE
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-UID:game-resident-evil-requiem@icalshare-hub
-SUMMARY:Resident Evil Requiem
-DTSTART;VALUE=DATE:20260227
-DTEND;VALUE=DATE:20260228
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Date retained for reference although it falls before the three-year window.
+UID:game-final-fantasy-resonance@icalshare-hub
+SUMMARY:Final Fantasy Resonance
+DTSTART;VALUE=DATE:20261022
+DTEND;VALUE=DATE:20261023
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch\, Nintendo Switch 2.
 LOCATION:United Kingdom
 STATUS:CONFIRMED
 TRANSP:TRANSPARENT
@@ -74,33 +85,33 @@ TRANSP:TRANSPARENT
 END:VEVENT
 
 BEGIN:VEVENT
-UID:game-final-fantasy-resonance@icalshare-hub
-SUMMARY:Final Fantasy Resonance
-DTSTART;VALUE=DATE:20261022
-DTEND;VALUE=DATE:20261023
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch\, Nintendo Switch 2.
+UID:game-gta6@icalshare-hub
+SUMMARY:Grand Theft Auto VI
+DTSTART;VALUE=DATE:20261119
+DTEND;VALUE=DATE:20261120
+DESCRIPTION:Platforms: PlayStation 5\, Xbox Series X/S. Confirmed release date currently listed for November 19\, 2026.
 LOCATION:United Kingdom
 STATUS:CONFIRMED
 TRANSP:TRANSPARENT
 END:VEVENT
 
 BEGIN:VEVENT
-UID:game-gears-eday@icalshare-hub
-SUMMARY:Gears of War: E-Day
-DTSTART;VALUE=DATE:20261006
-DTEND;VALUE=DATE:20261007
-DESCRIPTION:Platforms: PC\, Xbox Series X/S.
+UID:game-prince-persia-sands-time-remake@icalshare-hub
+SUMMARY:Prince of Persia: The Sands of Time Remake
+DTSTART;VALUE=DATE:20261231
+DTEND;VALUE=DATE:20270101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox One\, PlayStation 4\, Xbox Series S/X. TBA release date in source data; December 31 is used as a calendar placeholder.
 LOCATION:United Kingdom
-STATUS:CONFIRMED
+STATUS:TENTATIVE
 TRANSP:TRANSPARENT
 END:VEVENT
 
 BEGIN:VEVENT
-UID:game-enhrouded@icalshare-hub
-SUMMARY:Enshrouded
-DTSTART;VALUE=DATE:20261015
-DTEND;VALUE=DATE:20261016
-DESCRIPTION:Platforms: PC\, PlayStation 5.
+UID:game-persona4-revival@icalshare-hub
+SUMMARY:Persona 4 Revival
+DTSTART;VALUE=DATE:20270218
+DTEND;VALUE=DATE:20270219
+DESCRIPTION:Platforms: Xbox Series X/S\, PC. Additional platforms may vary by region and announcement.
 LOCATION:United Kingdom
 STATUS:CONFIRMED
 TRANSP:TRANSPARENT
@@ -125,17 +136,6 @@ DTEND;VALUE=DATE:20280101
 DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2. Square Enix has announced a late 2027 release window; exact date TBA.
 LOCATION:United Kingdom
 STATUS:TENTATIVE
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-UID:game-persona4-revival@icalshare-hub
-SUMMARY:Persona 4 Revival
-DTSTART;VALUE=DATE:20270218
-DTEND;VALUE=DATE:20270219
-DESCRIPTION:Platforms: Xbox Series X/S\, PC. Additional platforms may vary by region and announcement.
-LOCATION:United Kingdom
-STATUS:CONFIRMED
 TRANSP:TRANSPARENT
 END:VEVENT
 
@@ -261,44 +261,11 @@ TRANSP:TRANSPARENT
 END:VEVENT
 
 BEGIN:VEVENT
-UID:game-the-witcher-4@icalshare-hub
-SUMMARY:The Witcher 4
-DTSTART;VALUE=DATE:20281231
-DTEND;VALUE=DATE:20290101
-DESCRIPTION:Platforms: TBA. CD Projekt Red is targeting a 2028 release window; exact date and platforms TBA.
-LOCATION:United Kingdom
-STATUS:TENTATIVE
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-UID:game-diablo-5@icalshare-hub
-SUMMARY:Diablo V
-DTSTART;VALUE=DATE:20290331
-DTEND;VALUE=DATE:20290401
-DESCRIPTION:Platforms: TBA. Currently reported for Q1 2029; exact release date and platforms TBA.
-LOCATION:United Kingdom
-STATUS:TENTATIVE
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
 UID:game-marvel-blade@icalshare-hub
 SUMMARY:Marvel's Blade
 DTSTART;VALUE=DATE:20271231
 DTEND;VALUE=DATE:20280101
 DESCRIPTION:Platforms: PC\, Xbox Series X/S. Release date TBA.
-LOCATION:United Kingdom
-STATUS:TENTATIVE
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-UID:game-intergalactic-heretic-prophet@icalshare-hub
-SUMMARY:Intergalactic: The Heretic Prophet
-DTSTART;VALUE=DATE:20281231
-DTEND;VALUE=DATE:20290101
-DESCRIPTION:Platforms: PlayStation 5. Release date TBA.
 LOCATION:United Kingdom
 STATUS:TENTATIVE
 TRANSP:TRANSPARENT
@@ -332,6 +299,105 @@ SUMMARY:Contraband
 DTSTART;VALUE=DATE:20271231
 DTEND;VALUE=DATE:20280101
 DESCRIPTION:Platforms: PC\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-max-payne-remakes@icalshare-hub
+SUMMARY:Max Payne 1 & 2 Remake
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-assassins-creed-hexe@icalshare-hub
+SUMMARY:Assassin's Creed Hexe
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-marvels-wolverine@icalshare-hub
+SUMMARY:Marvel's Wolverine
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PlayStation 5. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-wonder-woman@icalshare-hub
+SUMMARY:Wonder Woman
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-everwild@icalshare-hub
+SUMMARY:Everwild
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-splinter-cell-remake@icalshare-hub
+SUMMARY:Splinter Cell Remake
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-hollow-knight-silksong@icalshare-hub
+SUMMARY:Hollow Knight: Silksong
+DTSTART;VALUE=DATE:20271231
+DTEND;VALUE=DATE:20280101
+DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch. Release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-the-witcher-4@icalshare-hub
+SUMMARY:The Witcher 4
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: TBA. CD Projekt Red is targeting a 2028 release window; exact date and platforms TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-intergalactic-heretic-prophet@icalshare-hub
+SUMMARY:Intergalactic: The Heretic Prophet
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: PlayStation 5. Release date TBA.
 LOCATION:United Kingdom
 STATUS:TENTATIVE
 TRANSP:TRANSPARENT
@@ -415,33 +481,55 @@ TRANSP:TRANSPARENT
 END:VEVENT
 
 BEGIN:VEVENT
-UID:game-max-payne-remakes@icalshare-hub
-SUMMARY:Max Payne 1 & 2 Remake
-DTSTART;VALUE=DATE:20271231
-DTEND;VALUE=DATE:20280101
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
-LOCATION:United Kingdom
-STATUS:TENTATIVE
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-UID:game-assassins-creed-hexe@icalshare-hub
-SUMMARY:Assassin's Creed Hexe
-DTSTART;VALUE=DATE:20271231
-DTEND;VALUE=DATE:20280101
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S. Release date TBA.
-LOCATION:United Kingdom
-STATUS:TENTATIVE
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
 UID:game-od@icalshare-hub
 SUMMARY:OD
 DTSTART;VALUE=DATE:20281231
 DTEND;VALUE=DATE:20290101
 DESCRIPTION:Platforms: Xbox Series X/S\, PC. Hideo Kojima project; release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-elder-scrolls-6@icalshare-hub
+SUMMARY:The Elder Scrolls VI
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: PC\, Xbox Series X/S. Bethesda Game Studios' next mainline RPG; exact release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-marvels-iron-man@icalshare-hub
+SUMMARY:Marvel's Iron Man
+DTSTART;VALUE=DATE:20281231
+DTEND;VALUE=DATE:20290101
+DESCRIPTION:Platforms: TBA. Single-player action-adventure from EA Motive; release date TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-diablo-5@icalshare-hub
+SUMMARY:Diablo V
+DTSTART;VALUE=DATE:20290331
+DTEND;VALUE=DATE:20290401
+DESCRIPTION:Platforms: TBA. Currently reported for Q1 2029; exact release date and platforms TBA.
+LOCATION:United Kingdom
+STATUS:TENTATIVE
+TRANSP:TRANSPARENT
+END:VEVENT
+
+BEGIN:VEVENT
+UID:game-project-orion-cyberpunk@icalshare-hub
+SUMMARY:Cyberpunk: Project Orion
+DTSTART;VALUE=DATE:20291231
+DTEND;VALUE=DATE:20300101
+DESCRIPTION:Platforms: TBA. The sequel to Cyberpunk 2077; exact release date TBA.
 LOCATION:United Kingdom
 STATUS:TENTATIVE
 TRANSP:TRANSPARENT
