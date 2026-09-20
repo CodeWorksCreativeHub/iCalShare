@@ -1,0 +1,85 @@
+name: Clean Expired ICS Events
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Runs weekly on Sunday at midnight UTC
+  workflow_dispatch: # Allows manual triggering from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Parse and remove expired events
+        run: |
+          cat << 'EOF' > cleanup.js
+          const fs = require('fs');
+          const path = require('path');
+
+          // Calculate the threshold date (5 days ago) in YYYYMMDD format
+          const thresholdDate = new Date();
+          thresholdDate.setDate(thresholdDate.getDate() - 5);
+          const cutoffString = thresholdDate.toISOString().split('T')[0].replace(/-/g, '');
+
+          function cleanIcs(filePath) {
+            const content = fs.readFileSync(filePath, 'utf8');
+            
+            const firstEventIndex = content.indexOf('BEGIN:VEVENT');
+            if (firstEventIndex === -1) return;
+            
+            const header = content.substring(0, firstEventIndex);
+            const events = content.match(/BEGIN:VEVENT[\s\S]*?END:VEVENT/g) || [];
+            
+            const keptEvents = events.filter(event => {
+              // Check DTEND first. If missing, fallback to DTSTART.
+              const endMatch = event.match(/DTEND(?:;[^:]+)?:(\d{8})/);
+              const startMatch = event.match(/DTSTART(?:;[^:]+)?:(\d{8})/);
+              
+              const compareDate = endMatch ? endMatch[1] : (startMatch ? startMatch[1] : null);
+              
+              // Keep event if it occurred within the last 5 days or is in the future
+              return compareDate && compareDate >= cutoffString;
+            });
+
+            // Reconstruct file with preserved header and remaining events
+            const formattedEvents = keptEvents.length > 0 ? keptEvents.join('\n\n') + '\n' : '';
+            const newContent = header.trimEnd() + '\n\n' + formattedEvents + 'END:VCALENDAR\n';
+            
+            fs.writeFileSync(filePath, newContent, 'utf8');
+            console.log(`Cleaned ${path.basename(filePath)}: kept ${keptEvents.length}/${events.length} events.`);
+          }
+
+          function walkSync(dir) {
+            const files = fs.readdirSync(dir);
+            for (const file of files) {
+              const fullPath = path.join(dir, file);
+              if (fs.statSync(fullPath).isDirectory()) {
+                // Ignore git and node_modules directories
+                if (!fullPath.includes('.git') && !fullPath.includes('node_modules')) {
+                  walkSync(fullPath);
+                }
+              } else if (fullPath.endsWith('.ics')) {
+                cleanIcs(fullPath);
+              }
+            }
+          }
+
+          walkSync(process.env.GITHUB_WORKSPACE || '.');
+          EOF
+          node cleanup.js
+          rm cleanup.js
+
+      - name: Commit and push changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: remove calendar events older than 5 days"
+          file_pattern: "*.ics"
