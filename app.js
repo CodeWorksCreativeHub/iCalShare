@@ -563,17 +563,13 @@ function openPreview(item) {
 
 	/*
 	 * Subscription URL.
-	 *
-	 * Use webcal:// instead of https:// for calendar
-	 * applications that support webcal subscriptions.
 	 */
-	var webcalUrl = absoluteUrl.replace(/^https?:\/\//i, "webcal://");
 
 	if (copyWebcalBtn) {
 		copyWebcalBtn.onclick = function () {
-			copyToClipboard(webcalUrl, function (copied) {
+			copyToClipboard(absoluteUrl, function (copied) {
 				if (copied) {
-					alert("Subscription URL copied to clipboard:\n" + webcalUrl);
+					alert("Subscription URL copied to clipboard:\n" + absoluteUrl);
 				} else {
 					alert("Could not copy the subscription URL automatically.\n\n" + "Subscription URL:\n" + webcalUrl);
 				}
