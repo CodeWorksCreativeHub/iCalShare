@@ -395,13 +395,43 @@ function renderParsedEvents(events) {
 		return;
 	}
 
+	var startOfToday = new Date();
+	startOfToday.setHours(0, 0, 0, 0);
+
+	var upcoming = events
+		.map(function (e) {
+			return { event: e, date: parseEventDate(e.dtstart || "") };
+		})
+		.filter(function (item) {
+			return item.date && item.date >= startOfToday;
+		})
+		.sort(function (a, b) {
+			return a.date - b.date;
+		});
+
+	if (upcoming.length === 0) {
+		previewEvents.innerHTML = "<p class='text-slate-500 dark:text-slate-400 text-xs p-2'>No upcoming events.</p>";
+		return;
+	}
+
 	var html = "";
-	events.slice(0, 10).forEach(function (e) {
-		var dateStr = formatDate(e.dtstart || "");
-		html += '<div class="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-800 last:border-none text-xs">' + '<span class="font-semibold text-slate-800 dark:text-slate-200">' + escapeHtml(e.summary || "Untitled Event") + "</span>" + '<span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono bg-blue-50 dark:bg-blue-900/40 px-2 py-0.5 rounded">' + escapeHtml(dateStr) + "</span>" + "</div>";
+	upcoming.slice(0, 10).forEach(function (item) {
+		var dateStr = formatDate(item.event.dtstart || "");
+		html += '<div class="flex justify-between items-center py-2 border-b border-slate-200 dark:border-slate-800 last:border-none text-xs">' + '<span class="font-semibold text-slate-800 dark:text-slate-200">' + escapeHtml(item.event.summary || "Untitled Event") + "</span>" + '<span class="text-[10px] text-blue-600 dark:text-blue-400 font-mono bg-blue-50 dark:bg-blue-900/40 px-2 py-0.5 rounded">' + escapeHtml(dateStr) + "</span>" + "</div>";
 	});
 
 	previewEvents.innerHTML = html;
+}
+
+function parseEventDate(rawStr) {
+	if (!rawStr) return null;
+	var clean = rawStr.replace(/[^0-9]/g, "");
+	if (clean.length < 8) return null;
+	var y = parseInt(clean.substring(0, 4), 10);
+	var m = parseInt(clean.substring(4, 6), 10) - 1;
+	var d = parseInt(clean.substring(6, 8), 10);
+	if (isNaN(y) || isNaN(m) || isNaN(d)) return null;
+	return new Date(y, m, d);
 }
 
 function formatDate(rawStr) {
