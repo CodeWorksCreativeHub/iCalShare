@@ -4,7 +4,8 @@ PRODID:-//iCalShare Hub//Video Game Releases//EN
 CALSCALE:GREGORIAN
 METHOD:PUBLISH
 X-WR-CALNAME:Video Game Releases
-X-WR-TIMEZONE:Europe/London
+X-APPLE-LANGUAGE:en
+X-APPLE-REGION:GB
 
 BEGIN:VEVENT
 UID:game-983869@icalshare-hub
