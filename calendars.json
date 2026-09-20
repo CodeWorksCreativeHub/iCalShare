@@ -1,17 +1,52 @@
 [
     {
-        "id": "us-holidays",
+        "id": "us-federal-holidays",
         "title": "US Federal Holidays",
         "category": "Holidays",
         "description": "Standard federal public holidays observed across the United States.",
-        "file": "calendars/holidays/us-holidays.ics"
+        "file": "calendars/holidays/us-federal-holidays.ics"
     },
     {
-        "id": "uk-holidays",
-        "title": "UK Holidays",
+        "id": "england-bank-holidays",
+        "title": "England Bank Holidays",
         "category": "Holidays",
-        "description": "UK bank holidays and public holidays for easy planning throughout the year.",
-        "file": "calendars/holidays/uk-holidays.ics"
+        "description": "UK bank holidays and public holidays for England and Wales.",
+        "file": "calendars/holidays/england-bank-holidays.ics"
+    },
+    {
+        "id": "scotland-bank-holidays",
+        "title": "Scotland Bank Holidays",
+        "category": "Holidays",
+        "description": "UK bank holidays and public holidays specific to Scotland.",
+        "file": "calendars/holidays/scotland-bank-holidays.ics"
+    },
+    {
+        "id": "australian-public-holidays",
+        "title": "Australian Public Holidays",
+        "category": "Holidays",
+        "description": "National public holidays observed across Australia.",
+        "file": "calendars/holidays/australian-public-holidays.ics"
+    },
+    {
+        "id": "canadian-public-holidays",
+        "title": "Canadian Public Holidays",
+        "category": "Holidays",
+        "description": "National public holidays observed across Canada.",
+        "file": "calendars/holidays/canadian-public-holidays.ics"
+    },
+    {
+        "id": "new-zealand-public-holidays",
+        "title": "New Zealand Public Holidays",
+        "category": "Holidays",
+        "description": "National public holidays observed across New Zealand.",
+        "file": "calendars/holidays/new-zealand-public-holidays.ics"
+    },
+    {
+        "id": "international-holidays",
+        "title": "International Holidays",
+        "category": "Holidays",
+        "description": "Major international holidays and observances celebrated worldwide.",
+        "file": "calendars/holidays/international-holidays.ics"
     },
     {
         "id": "uk-seasons",
