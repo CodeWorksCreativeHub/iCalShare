@@ -9,16 +9,6 @@ X-APPLE-REGION:001
 
 BEGIN:VEVENT
 SUMMARY:International Women's Day
-DTSTART;VALUE=DATE:20260308
-DTEND;VALUE=DATE:20260309
-DESCRIPTION:Global day celebrating the social, economic, cultural, and political achievements of women.
-LOCATION:Global
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-SUMMARY:International Women's Day
 DTSTART;VALUE=DATE:20270308
 DTEND;VALUE=DATE:20270309
 DESCRIPTION:Global day celebrating the social, economic, cultural, and political achievements of women.
@@ -52,16 +42,6 @@ SUMMARY:International Women's Day
 DTSTART;VALUE=DATE:20300308
 DTEND;VALUE=DATE:20300309
 DESCRIPTION:Global day celebrating the social, economic, cultural, and political achievements of women.
-LOCATION:Global
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-SUMMARY:Earth Day
-DTSTART;VALUE=DATE:20260422
-DTEND;VALUE=DATE:20260423
-DESCRIPTION:Annual event to demonstrate support for environmental protection.
 LOCATION:Global
 STATUS:CONFIRMED
 TRANSP:TRANSPARENT
@@ -109,16 +89,6 @@ END:VEVENT
 
 BEGIN:VEVENT
 SUMMARY:International Workers' Day
-DTSTART;VALUE=DATE:20260501
-DTEND;VALUE=DATE:20260502
-DESCRIPTION:Celebration of laborers and the working classes.
-LOCATION:Global
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-SUMMARY:International Workers' Day
 DTSTART;VALUE=DATE:20270501
 DTEND;VALUE=DATE:20270502
 DESCRIPTION:Celebration of laborers and the working classes.
@@ -152,16 +122,6 @@ SUMMARY:International Workers' Day
 DTSTART;VALUE=DATE:20300501
 DTEND;VALUE=DATE:20300502
 DESCRIPTION:Celebration of laborers and the working classes.
-LOCATION:Global
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-SUMMARY:World Environment Day
-DTSTART;VALUE=DATE:20260605
-DTEND;VALUE=DATE:20260606
-DESCRIPTION:United Nations day for encouraging worldwide awareness and action to protect our environment.
 LOCATION:Global
 STATUS:CONFIRMED
 TRANSP:TRANSPARENT
@@ -356,5 +316,4 @@ LOCATION:Global
 STATUS:CONFIRMED
 TRANSP:TRANSPARENT
 END:VEVENT
-
 END:VCALENDAR
