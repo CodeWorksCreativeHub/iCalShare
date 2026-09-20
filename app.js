@@ -38,6 +38,7 @@ var resetDataBtn = document.getElementById("resetDataBtn");
 
 var submitModal = document.getElementById("submitModal");
 var openSubmitModalBtn = document.getElementById("openSubmitModalBtn");
+var openSubmitModalBtnMobile = document.getElementById("openSubmitModalBtnMobile");
 var closeSubmitModalBtn = document.getElementById("closeSubmitModalBtn");
 var submissionForm = document.getElementById("submissionForm");
 
@@ -141,6 +142,14 @@ window.addEventListener("DOMContentLoaded", function () {
 	// Submit Modal Handlers
 	if (openSubmitModalBtn) {
 		openSubmitModalBtn.addEventListener("click", function () {
+			if (submitModal) {
+				submitModal.classList.remove("hidden");
+			}
+		});
+	}
+
+	if (openSubmitModalBtnMobile) {
+		openSubmitModalBtnMobile.addEventListener("click", function () {
 			if (submitModal) {
 				submitModal.classList.remove("hidden");
 			}
