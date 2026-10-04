@@ -169,16 +169,6 @@ END:VEVENT
 
 BEGIN:VEVENT
 SUMMARY:International Day of Peace
-DTSTART;VALUE=DATE:20260921
-DTEND;VALUE=DATE:20260922
-DESCRIPTION:United Nations-sanctioned holiday dedicated to world peace.
-LOCATION:Global
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-SUMMARY:International Day of Peace
 DTSTART;VALUE=DATE:20270921
 DTEND;VALUE=DATE:20270922
 DESCRIPTION:United Nations-sanctioned holiday dedicated to world peace.
