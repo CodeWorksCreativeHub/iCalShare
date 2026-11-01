@@ -8,28 +8,6 @@ X-APPLE-LANGUAGE:en
 X-APPLE-REGION:GB
 
 BEGIN:VEVENT
-UID:game-final-fantasy-resonance@icalshare-hub
-SUMMARY:Final Fantasy Resonance
-DTSTART;VALUE=DATE:20261022
-DTEND;VALUE=DATE:20261023
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch\, Nintendo Switch 2.
-LOCATION:United Kingdom
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
-UID:game-call-of-duty-mw4@icalshare-hub
-SUMMARY:Call of Duty: Modern Warfare 4
-DTSTART;VALUE=DATE:20261023
-DTEND;VALUE=DATE:20261024
-DESCRIPTION:Platforms: PC\, PlayStation 5\, Xbox Series X/S\, Nintendo Switch 2.
-LOCATION:United Kingdom
-STATUS:CONFIRMED
-TRANSP:TRANSPARENT
-END:VEVENT
-
-BEGIN:VEVENT
 UID:game-phantom-blade-zero@icalshare-hub
 SUMMARY:Phantom Blade Zero
 DTSTART;VALUE=DATE:20261029
